@@ -1,0 +1,91 @@
+* HeadingOne                                                                  :TagOne:
+:PROPERTIES:
+:CATEGORY: CategoryOne
+:END:
+** TODO TaskOne                                                             :TagTwo:
+** TODO TaskTwo
+SCHEDULED: <2015-10-10 Sa +1y>
+:PROPERTIES:
+:END:
+:LOGBOOK:
+- State "DONE"       from "NEXT"       [2014-10-10 Fr 17:17]
+CLOCK: [2014-10-10 Fr 17:05]--[2014-10-10 Fr 17:17] =>  0:12
+CLOCK: [2014-10-08 Mi 13:25]--[2014-10-08 Mi 13:34] =>  0:09
+:END:
+:PROPERTIES:
+:Effort:   0:20
+:LAST_REPEAT: [2014-10-10 Fr 17:17]
+:END:
+
+** TODO TaskThree
+* HeadingTwo                                                                :TagThree:
+:PROPERTIES:
+:CATEGORY: CategoryTwo
+:END:
+
+** HABIT TaskFive                                                              :TagTwo:
+   :PROPERTIES:
+   :END:
+:LOGBOOK:
+- State "DONE"       from "TODO"       [2014-01-04 Sa 09:23]
+- State "DONE"       from "TODO"       [2014-01-03 Fr 09:45]
+- State "CANCELED"   from "TODO"       [2013-12-28 Sa 06:37]
+- State "CANCELED"   from "TODO"       [2013-12-28 Sa 06:37]
+- State "DONE"       from "TODO"       [2013-12-26 Do 21:05]
+- State "CANCELED"   from "TODO"       [2013-12-23 Mo 17:39]
+- State "DONE"       from "TODO"       [2013-12-23 Mo 13:23]
+- State "DONE"       from "TODO"       [2013-12-18 Mi 23:23]
+- State "DONE"       from "TODO"       [2013-12-12 Do 17:45]
+- State "DONE"       from "TODO"       [2013-12-09 Mo 22:47]
+- State "DONE"       from "TODO"       [2013-12-06 Fr 06:12]
+- State "DONE"       from "TODO"       [2013-11-25 Mo 23:55]
+- State "DONE"       from "TODO"       [2013-11-24 So 11:36]
+- State "DONE"       from "TODO"       [2013-11-22 Fr 06:51]
+CLOCK: [2013-11-18 Mo 16:05]--[2013-11-18 Mo 16:07] =>  0:02
+:END:
+:PROPERTIES:
+:STYLE:    habit
+:LAST_REPEAT: [2014-01-04 Sa 09:23]
+:END:
+** TODO TaskSix                                                                   :TagTwo:
+   SCHEDULED: <2015-01-11 So 15:00 +1w>
+   :PROPERTIES:
+   :Effort:   1:00
+   :STYLE:    habit
+   :LAST_REPEAT: [2015-01-01 Do 18:14]
+   :END:
+   :LOGBOOK:
+   - State "DONE"       from "NEXT"       [2015-01-01 Do 18:14]
+   CLOCK: [2015-01-01 Do 17:40]--[2015-01-01 Do 18:14] =>  0:34
+   CLOCK: [2014-12-31 Mi 10:51]--[2014-12-31 Mi 11:14] =>  0:23
+   - State "DONE"       from "HABIT"      [2014-12-28 So 19:02]
+   CLOCK: [2014-12-28 So 18:02]--[2014-12-28 So 19:02] =>  1:00
+   CLOCK: [2014-12-22 Mo 20:18]--[2014-12-22 Mo 20:43] =>  0:25
+   - State "DONE"       from "HABIT"      [2014-12-21 So 16:53]
+   - State "DONE"       from "NEXT"       [2014-12-21 So 16:51]
+   CLOCK: [2014-12-21 So 15:21]--[2014-12-21 So 16:51] =>  1:30
+   :END:
+* HeadlineTwo                                                                     :TagOne:TagThree:TagTwo:
+:PROPERTIES:
+:CATEGORY: CategoryTwo
+:END:
+  :LOGBOOK:
+  CLOCK: [2013-11-02 Sa 08:41]--[2013-11-02 Sa 08:42] =>  0:01
+  :END:
+** DONE TaskSeven
+   SCHEDULED: <2015-01-05 Mo 05:30>
+   :PROPERTIES:
+   :Effort:   0:30
+   :END:
+   :LOGBOOK:
+   - State "DONE"       from "NEXT"       [2015-01-05 Mo 07:36]
+   CLOCK: [2015-01-05 Mo 05:34]--[2015-01-05 Mo 07:36] =>  2:02
+   :END:
+** TODO TaskEight
+:PROPERTIES:
+:Effort:   0:25
+:END:
+** TODO TaskNine
+:PROPERTIES:
+:Effort:   0:25
+:END:
