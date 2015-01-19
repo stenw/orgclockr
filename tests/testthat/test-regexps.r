@@ -7,6 +7,12 @@ orgfile <-
         readLines()
 
 test_that('Pattern for headlines.', {
-     expect_output(cut_headlines(orgfile[1]),
+     expect_output(extract_headlines(orgfile[1]),
                    "* HeadingOne                                                                  :TagOne:")
+     expect_equal(class(extract_headlines(orgfile[1])), "matrix")
+})
+
+test_that('Pattern for timestamps', {
+    expect_equal(class(extract_timestamps(orgfile)), "list")
+    expect_equal(extract_timestamps(orgfile[82])[[1]] %>% length(), 2)
 })
