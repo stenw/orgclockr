@@ -3,10 +3,10 @@
 \alias{extract_tags}
 \title{Extract the tags of an org file.}
 \usage{
-extract_tags(orgfile)
+extract_tags(x)
 }
 \arguments{
-\item{orgfile}{org object as character vector.}
+\item{x}{org object as character vector.}
 }
 \value{
 the tags of an orgfile as a character matrix.
@@ -16,7 +16,8 @@ This function is used to extract the tags matching the regexp
 pattern.
 }
 \seealso{
-\code{extract_headlines}, \code{extract_timestamps}
-and \code{extract_categories} for extractions of other org elements.
+\code{extract_headlines}, \code{extract_timestamps},
+\code{extract_categories} and \code{extract_levels} for
+extractions of other org elements.
 }
 

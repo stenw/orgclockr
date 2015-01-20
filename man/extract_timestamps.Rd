@@ -3,10 +3,10 @@
 \alias{extract_timestamps}
 \title{Extract the timestamps of an org file.}
 \usage{
-extract_timestamps(orgfile)
+extract_timestamps(x)
 }
 \arguments{
-\item{orgfile}{org object as character vector.}
+\item{x}{org object as character vector.}
 }
 \value{
 the timestamps of an orgfile as a character matrix.
@@ -16,7 +16,8 @@ This function is used to extract the timestamps matching the
 regexp pattern.
 }
 \seealso{
-\code{extract_headlines}, \code{extract_tags}
-and \code{extract_categories} for extractions of other org elements.
+\code{extract_headlines}, \code{extract_tags},
+\code{extract_levels} and \code{extract_categories} for
+extractions of other org elements.
 }
 

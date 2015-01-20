@@ -2,14 +2,15 @@
 ##'
 ##' This function is used to extract the categories matching the
 ##' regexp pattern.
-##' @param orgfile org object as character vector.
+##' @param x org object as character vector.
 ##' @return the categories of an orgfile as a character matrix.
 ##' @export extract_tags
-##' @seealso \code{extract_headlines}, \code{extract_timestamps}
-##' and \code{extract_tags} for extractions of other org elements.
+##' @seealso \code{extract_headlines}, \code{extract_timestamps},
+##' \code{extract_tags} and \code{extract_levels} for extractions of
+##' other org elements.
 extract_categories <-
-    function(orgfile) {
-        str_match(orgfile, "^[ :]+CATEGORY:\\ \\w+") %>%
-            str_replace("^:CATEGORY:\\ ", "") %>%
+    function(x) {
+        stringr::str_match(x, "^[ :]+CATEGORY:\\ \\w+") %>%
+            stringr::str_replace("^:CATEGORY:\\ ", "") %>%
             na.omit()
     }

@@ -3,10 +3,10 @@
 \alias{extract_headlines}
 \title{Extract the headlines of an org file.}
 \usage{
-extract_headlines(orgfile)
+extract_headlines(x)
 }
 \arguments{
-\item{orgfile}{org object as character vector.}
+\item{x}{org object as character vector.}
 }
 \value{
 the headlines of an orgfile as a character matrix.
@@ -16,7 +16,8 @@ This function is used to extract the headlines matching the regexp
 pattern.
 }
 \seealso{
-\code{extract_tags}, \code{extract_timestamps}
-and \code{extract_categories} for extractions of other org elements.
+\code{extract_tags}, \code{extract_timestamps},
+\code{extract_levels} and \code{extract_categories} for
+extractions of other org elements.
 }
 

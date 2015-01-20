@@ -3,10 +3,10 @@
 \alias{extract_categories}
 \title{Extract the categories of an org file.}
 \usage{
-extract_categories(orgfile)
+extract_categories(x)
 }
 \arguments{
-\item{orgfile}{org object as character vector.}
+\item{x}{org object as character vector.}
 }
 \value{
 the categories of an orgfile as a character matrix.
@@ -16,7 +16,8 @@ This function is used to extract the categories matching the
 regexp pattern.
 }
 \seealso{
-\code{extract_headlines}, \code{extract_timestamps}
-and \code{extract_tags} for extractions of other org elements.
+\code{extract_headlines}, \code{extract_timestamps},
+\code{extract_tags} and \code{extract_levels} for extractions of
+other org elements.
 }
 
