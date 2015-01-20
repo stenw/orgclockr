@@ -30,8 +30,7 @@ extract_todostates <-
         if (is.vector(pattern)) {
             pat <-
                 pattern %>%
-                    paste0(sep="|", collapse = "") %>%
-                    stringr::str_replace("\\|$", "")
+                    paste0(collapse = "|")
         }
         else {
             pat <- pattern

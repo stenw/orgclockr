@@ -4,7 +4,6 @@
 ##' headlines.
 ##' @param x org object as character vector.
 ##' @return the nodes of an org file as a character list.
-##' @export split_orgfile
 split_orgfile <-
     function(x) {
         headline_ids <-
