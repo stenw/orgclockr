@@ -7,9 +7,14 @@ orgfile <-
         readLines()
 
 test_that('Pattern for headlines.', {
-     expect_output(extract_headlines(orgfile[1]),
-                   "* HeadingOne                                                                  :TagOne:")
-     expect_equal(class(extract_headlines(orgfile[1])), "matrix")
+     expect_output(extract_headlines(orgfile[1]), "HeadingOne")
+     expect_equal(class(extract_headlines(orgfile[1])), "character")
+     expect_true(is.vector(extract_headlines(orgfile)))
+     ## check filtering todo keywords AND tags with
+     ## str_replace_all()
+     expect_equal(
+         "** TODO TaskSix                                        :TagTwo:" %>%
+             extract_headlines(), "TaskSix")
 })
 
 test_that('Pattern for timestamps.', {
@@ -19,9 +24,22 @@ test_that('Pattern for timestamps.', {
 
 test_that('Pattern for categories.', {
     expect_output(extract_categories(orgfile)[1], "CategoryOne")
+    expect_true(is.vector(extract_categories(orgfile)))
      })
 
 test_that('Pattern for levels.', {
-    expect_equal("** Headline test " %>%
-                     extract_levels(), 3)
+    expect_equal("** Headline test " %>% extract_levels(), 2)
+    expect_true(is.vector(extract_levels(orgfile)))
 })
+
+test_that('Pattern for todostates.', {
+     expect_equal(c("* TEST_THAT test", "** TODO Test TESTING") %>%
+                     extract_todostates(),
+                  c("TEST_THAT", "TODO"))
+     expect_output(extract_todostates("** TODO test", c("HABIT", "TODO")),
+                   "TODO")
+     ## regarding NAs
+     expect_equal(extract_todostates(c("* TODO test", "** Test Headline"),
+                  c("DONE", "TODO")) %>% length(), 2)
+     expect_true(is.vector(extract_todostates(orgfile)))
+     })

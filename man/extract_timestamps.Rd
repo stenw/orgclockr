@@ -9,15 +9,25 @@ extract_timestamps(x)
 \item{x}{org object as character vector.}
 }
 \value{
-the timestamps of an orgfile as a character matrix.
+the timestamps of an orgfile as a list.
 }
 \description{
 This function is used to extract the timestamps matching the
 regexp pattern.
 }
+\examples{
+system.file("extdata", "sample.org", package = "orgclockr") \%>\%
+readLines() \%>\%
+extract_timestamps()[c(62:63)]
+## [[1]]
+## [1] "2014-12-28 So 18:02" "2014-12-28 So 19:02"
+##
+## [[2]]
+## [1] "2014-12-22 Mo 20:18" "2014-12-22 Mo 20:43"
+}
 \seealso{
-\code{extract_headlines}, \code{extract_tags},
-\code{extract_levels} and \code{extract_categories} for
-extractions of other org elements.
+\code{extract_todostates}, \code{extract_headlines},
+\code{extract_tags}, \code{extract_levels} and
+\code{extract_categories} to extract other org elements.
 }
 

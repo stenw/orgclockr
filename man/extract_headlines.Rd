@@ -15,9 +15,16 @@ the headlines of an orgfile as a character matrix.
 This function is used to extract the headlines matching the regexp
 pattern.
 }
+\examples{
+system.file("extdata", "sample.org", package = "orgclockr") \%>\%
+readLines() \%>\%
+extract_headlines() \%>\%
+last()
+## [1] "TODO TaskNine"
+}
 \seealso{
-\code{extract_tags}, \code{extract_timestamps},
-\code{extract_levels} and \code{extract_categories} for
-extractions of other org elements.
+\code{extract_todostates}, \code{extract_tags},
+\code{extract_timestamps}, \code{extract_levels} and
+\code{extract_categories} to extract other org elements.
 }
 

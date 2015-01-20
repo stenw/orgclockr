@@ -9,15 +9,22 @@ extract_categories(x)
 \item{x}{org object as character vector.}
 }
 \value{
-the categories of an orgfile as a character matrix.
+the categories of an orgfile as a character vector.
 }
 \description{
 This function is used to extract the categories matching the
 regexp pattern.
 }
+\examples{
+system.file("extdata", "sample.org", package = "orgclockr") \%>\%
+readLines() \%>\%
+extract_categories() \%>\%
+first()
+## [1] "CategoryOne"
+}
 \seealso{
-\code{extract_headlines}, \code{extract_timestamps},
-\code{extract_tags} and \code{extract_levels} for extractions of
-other org elements.
+\code{extract_todostates}, \code{extract_headlines},
+\code{extract_timestamps}, \code{extract_tags} and
+\code{extract_levels} to extract other org elements.
 }
 

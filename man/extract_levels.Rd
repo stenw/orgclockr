@@ -16,9 +16,15 @@ vector.
 Get the \code{org-level} in an org file by counting the prepending
 heading star characters.
 }
+\examples{
+system.file("extdata", "sample.org", package = "orgclockr") \%>\%
+readLines() \%>\%
+extract_levels()
+##  [1] 1 2 2 2 1 2 2 1 2 2 2
+}
 \seealso{
-\code{extract_headlines}, \code{extract_timestamps},
-\code{extract_tags} and \code{extract_categories} for extractions
-of other org elements.
+\code{extract_todostates}, \code{extract_headlines},
+\code{extract_timestamps}, \code{extract_tags} and
+\code{extract_categories} to extract other org elements.
 }
 

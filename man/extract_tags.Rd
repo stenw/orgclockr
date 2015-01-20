@@ -9,15 +9,23 @@ extract_tags(x)
 \item{x}{org object as character vector.}
 }
 \value{
-the tags of an orgfile as a character matrix.
+the tags of an orgfile as a character vector.
 }
 \description{
 This function is used to extract the tags matching the regexp
 pattern.
 }
+\examples{
+system.file("extdata", "sample.org", package = "orgclockr") \%>\%
+readLines() \%>\%
+extract_tags()
+## [1] ":TagOne:"                 ":TagTwo:"
+## [3] ":TagThree:"               ":TagTwo:"
+## [5] ":TagTwo:"                 ":TagOne:TagThree:TagTwo:"
+}
 \seealso{
-\code{extract_headlines}, \code{extract_timestamps},
-\code{extract_categories} and \code{extract_levels} for
-extractions of other org elements.
+\code{extract_todostates}, \code{extract_headlines},
+\code{extract_timestamps}, \code{extract_categories} and
+\code{extract_levels} to extract other org elements.
 }
 
