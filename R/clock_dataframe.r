@@ -4,12 +4,12 @@ clock_dataframe <-
         tags        <- extract_tags(x)
         headlines   <- extract_headlines(x)
         levels      <- extract_levels(x)
-        timestamps  <- extract_timestamps(x)
+        ## timestamps  <- extract_timestamps(x)
         todostates  <- extract_todostates(x)
         cbind(categories,
               tags,
               headlines,
               levels,
-              timestamps,
+              ## timestamps,
               todostates)
     }

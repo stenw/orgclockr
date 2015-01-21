@@ -16,12 +16,12 @@
 ##' \code{extract_categories} to extract other org elements.
 extract_headlines <-
     function(x) {
-        tags <- extract_tags(x) %>% na.omit() %>%
+        tags          <- extract_tags(x) %>% na.omit() %>%
             paste0(collapse = "|")
-        keywords <- extract_todostates(x) %>% na.omit() %>%
+        keywords      <- extract_todostates(x) %>% na.omit() %>%
             paste0(collapse = "|")
-        replace_this <- c(tags, keywords) %>% paste0(collapse = "|")
-        headlines <-
+        replace_this  <- c(tags, keywords) %>% paste0(collapse = "|")
+        headlines     <-
             x %>%
                 extract_raw_headlines()
         lapply(seq_along(headlines), function(i) {

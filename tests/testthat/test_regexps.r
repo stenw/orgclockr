@@ -43,3 +43,14 @@ test_that('Pattern for todostates.', {
                   c("DONE", "TODO")) %>% length(), 2)
      expect_true(is.vector(extract_todostates(orgfile)))
      })
+
+test_that('Test if the length of output of extract_ functions is correct. ', {
+    expect_equal(length(c(
+        extract_categories(orgfile),
+        extract_headlines(orgfile),
+        extract_levels(orgfile),
+        extract_tags(orgfile),
+        extract_timestamps(orgfile),
+        extract_todostates(orgfile)
+        )), 6 * nrow(orgfile))
+})
