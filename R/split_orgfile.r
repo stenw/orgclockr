@@ -8,7 +8,7 @@ split_orgfile <-
     function(x) {
         headline_ids <-
             x %>%
-                str_match("^\\*{1, }\\s.+") %>%
+                extract_raw_headlines() %>%
                 complete.cases() %>%
                 which()
         x %>%

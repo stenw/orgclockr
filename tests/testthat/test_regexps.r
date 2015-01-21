@@ -50,7 +50,6 @@ test_that('Test if the length of output of extract_ functions is correct. ', {
         extract_headlines(orgfile),
         extract_levels(orgfile),
         extract_tags(orgfile),
-        extract_timestamps(orgfile),
         extract_todostates(orgfile)
-        )), 6 * nrow(orgfile))
+        )), 5 * nrow(orgfile))
 })

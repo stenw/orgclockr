@@ -18,5 +18,6 @@ extract_categories <-
     function(x) {
         stringr::str_match(x, "^[ :]+CATEGORY:\\ \\w+") %>%
             stringr::str_replace("^:CATEGORY:\\ ", "") %>%
+            na.omit() %>%
             as.character()
     }

@@ -20,7 +20,7 @@ extract_headlines <-
             paste0(collapse = "|")
         keywords      <- extract_todostates(x) %>% na.omit() %>%
             paste0(collapse = "|")
-        replace_this  <- c(tags, keywords) %>% paste0(collapse = "|")
+        replace_this  <- c(tags, keywords, ":") %>% paste0(collapse = "|")
         headlines     <-
             x %>%
                 extract_raw_headlines()

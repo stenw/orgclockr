@@ -7,6 +7,11 @@
 ##' of each element in \code{x}. Uppercase todo states seem to be
 ##' quite common in the orgmode community. The pattern also regards
 ##' keywords containing an underscore.
+##'
+##' @details
+##' The headlines without any todo keywords will give a \code{NA}
+##' value, effectively resulting in a vector of as many elements as
+##' the number of headlines in the org file.
 ##' @param x org object as character vector.
 ##' @param pattern either a regular expression
 ##' (see:\url{http://www.regular-expressions.info/}) or a character
