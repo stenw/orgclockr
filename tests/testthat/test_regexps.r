@@ -46,10 +46,10 @@ test_that('Pattern for todostates.', {
 
 test_that('Test if the length of output of extract_ functions is correct. ', {
     expect_equal(length(c(
-        extract_categories(orgfile),
         extract_headlines(orgfile),
         extract_levels(orgfile),
         extract_tags(orgfile),
+        extract_categories(orgfile),
         extract_todostates(orgfile)
-        )), 5 * nrow(orgfile))
+        )), 4 * 11)
 })
