@@ -4,16 +4,17 @@
 ##' regexp pattern.
 ##' @param x org object as character vector.
 ##' @return the timestamps of an orgfile as a list.
-##' @export extract_tags
+##' @export extract_timestamps
 ##' @examples
 ##' system.file("extdata", "sample.org", package = "orgclockr") %>%
 ##' readLines() %>%
-##' extract_timestamps()[c(62:63)]
+##' extract_timestamps()[c(55:56)]
 ##' ## [[1]]
-##' ## [1] "2014-12-28 So 18:02" "2014-12-28 So 19:02"
+##' ## [1] "2015-01-01 Do 17:40" "2015-01-01 Do 18:14"
 ##' ##
 ##' ## [[2]]
-##' ## [1] "2014-12-22 Mo 20:18" "2014-12-22 Mo 20:43"
+##' ## [1] "2014-12-31 Mi 10:51" "2014-12-31 Mi 11:14"
+##' ##
 ##' @seealso \code{extract_todostates}, \code{extract_headlines},
 ##' \code{extract_tags}, \code{extract_levels} and
 ##' \code{extract_categories} to extract other org elements.

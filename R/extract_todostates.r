@@ -26,7 +26,7 @@
 ##' readLines() %>%
 ##' extract_todostates()
 ##' ##  [1] NA      "TODO"  "TODO"  "TODO"  NA      "HABIT" "TODO"  NA      "DONE"
-##' ## [10] "TODO"  "TODO"
+##' ## [10] "TODO"  "HOLD"  "TODO"
 ##' @seealso \code{extract_timestamps}, \code{extract_headlines},
 ##' \code{extract_tags}, \code{extract_levels} and
 ##' \code{extract_categories} to extract other org elements.

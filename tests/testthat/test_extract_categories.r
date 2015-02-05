@@ -5,4 +5,4 @@ test_that('More categories for one node are concatenated to one object.', {
                     ":CATEGORY: OneMore",
                     ":CATEGORY: AndAnotherOne") %>%
                         extract_categories() %>% length(), 1)
-     })
+ })

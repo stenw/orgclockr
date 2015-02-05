@@ -25,6 +25,11 @@ of each element in \code{x}. Uppercase todo states seem to be
 quite common in the orgmode community. The pattern also regards
 keywords containing an underscore.
 }
+\details{
+The headlines without any todo keywords will give a \code{NA}
+value, effectively resulting in a vector of as many elements as
+the number of headlines in the org file.
+}
 \examples{
 extract_todostates(c("* TODO test", "** Test Headline"), c("DONE", "TODO"))
 ## [1] "TODO" NA

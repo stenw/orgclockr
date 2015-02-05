@@ -6,17 +6,14 @@
 ** TODO TaskTwo
 SCHEDULED: <2015-10-10 Sa +1y>
 :PROPERTIES:
+:Effort:   0:20
+:LAST_REPEAT: [2014-10-10 Fr 17:17]
 :END:
 :LOGBOOK:
 - State "DONE"       from "NEXT"       [2014-10-10 Fr 17:17]
 CLOCK: [2014-10-10 Fr 17:05]--[2014-10-10 Fr 17:17] =>  0:12
 CLOCK: [2014-10-08 Mi 13:25]--[2014-10-08 Mi 13:34] =>  0:09
 :END:
-:PROPERTIES:
-:Effort:   0:20
-:LAST_REPEAT: [2014-10-10 Fr 17:17]
-:END:
-
 ** TODO TaskThree
 * HeadingTwo                                                                :TagThree:
 :PROPERTIES:
@@ -24,8 +21,10 @@ CLOCK: [2014-10-08 Mi 13:25]--[2014-10-08 Mi 13:34] =>  0:09
 :END:
 
 ** HABIT TaskFive                                                              :TagTwo:
-   :PROPERTIES:
-   :END:
+:PROPERTIES:
+:STYLE:    habit
+:LAST_REPEAT: [2014-01-04 Sa 09:23]
+:END:
 :LOGBOOK:
 - State "DONE"       from "TODO"       [2014-01-04 Sa 09:23]
 - State "DONE"       from "TODO"       [2014-01-03 Fr 09:45]
@@ -43,10 +42,7 @@ CLOCK: [2014-10-08 Mi 13:25]--[2014-10-08 Mi 13:34] =>  0:09
 - State "DONE"       from "TODO"       [2013-11-22 Fr 06:51]
 CLOCK: [2013-11-18 Mo 16:05]--[2013-11-18 Mo 16:07] =>  0:02
 :END:
-:PROPERTIES:
-:STYLE:    habit
-:LAST_REPEAT: [2014-01-04 Sa 09:23]
-:END:
+
 ** TODO TaskSix                                                                   :TagTwo:
    SCHEDULED: <2015-01-11 So 15:00 +1w>
    :PROPERTIES:
@@ -69,9 +65,6 @@ CLOCK: [2013-11-18 Mo 16:05]--[2013-11-18 Mo 16:07] =>  0:02
 :PROPERTIES:
 :CATEGORY: CategoryTwo
 :END:
-  :LOGBOOK:
-  CLOCK: [2013-11-02 Sa 08:41]--[2013-11-02 Sa 08:42] =>  0:01
-  :END:
 ** DONE TaskSeven
    SCHEDULED: <2015-01-05 Mo 05:30>
    :PROPERTIES:
@@ -85,7 +78,27 @@ CLOCK: [2013-11-18 Mo 16:05]--[2013-11-18 Mo 16:07] =>  0:02
 :PROPERTIES:
 :Effort:   0:25
 :END:
-** TODO TaskNine
+:LOGBOOK:
+CLOCK: [2015-02-05 Do 11:58]--[2015-02-05 Do 12:09] =>  0:11
+CLOCK: [2015-02-05 Do 11:31]--[2015-02-05 Do 11:43] =>  0:12
+CLOCK: [2015-01-20 Di 09:04]--[2015-01-20 Di 11:13] =>  2:09
+:END:
+*** HOLD TaskNine
+:PROPERTIES:
+:Effort:   4:00
+:END:
+:LOGBOOK:
+CLOCK: [2015-01-19 Mo 11:05]--[2015-01-19 Mo 11:07] =>  0:02
+:END:
+** TODO TaskTen
 :PROPERTIES:
 :Effort:   0:25
+:END:
+:LOGBOOK:
+CLOCK: [2015-01-19 Mo 22:57]--[2015-01-20 Di 00:05] =>  1:08
+CLOCK: [2015-01-19 Mo 21:55]--[2015-01-19 Mo 22:12] =>  0:17
+CLOCK: [2015-01-19 Mo 21:43]--[2015-01-19 Mo 21:44] =>  0:01
+CLOCK: [2015-01-19 Mo 20:40]--[2015-01-19 Mo 21:42] =>  1:02
+CLOCK: [2015-01-19 Mo 19:25]--[2015-01-19 Mo 19:41] =>  0:16
+CLOCK: [2015-01-19 Mo 16:11]--[2015-01-19 Mo 19:01] =>  2:50
 :END:

@@ -10,7 +10,7 @@
 ##' readLines() %>%
 ##' extract_headlines() %>%
 ##' last()
-##' ## [1] "TODO TaskNine"
+##' ## [1] "TODO TaskTen"
 ##' @seealso \code{extract_todostates}, \code{extract_tags},
 ##' \code{extract_timestamps}, \code{extract_levels} and
 ##' \code{extract_categories} to extract other org elements.

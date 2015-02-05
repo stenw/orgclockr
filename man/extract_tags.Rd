@@ -15,13 +15,21 @@ the tags of an orgfile as a character vector.
 This function is used to extract the tags matching the regexp
 pattern.
 }
+\details{
+If there is more than one tag for a headline, they will
+be bundled in one character object separated by one space
+character. The headlines without any tag will give a \code{NA}
+value, effectively resulting in a vector of as many elements as
+the number of headlines in the org file.
+}
 \examples{
 system.file("extdata", "sample.org", package = "orgclockr") \%>\%
 readLines() \%>\%
 extract_tags()
-## [1] ":TagOne:"                 ":TagTwo:"
-## [3] ":TagThree:"               ":TagTwo:"
-## [5] ":TagTwo:"                 ":TagOne:TagThree:TagTwo:"
+##  [1] "TagOne"                 "TagTwo"                 NA
+##  [4] NA                       "TagThree"               "TagTwo"
+##  [7] "TagTwo"                 "TagOne TagThree TagTwo" NA
+## [10] NA                       NA
 }
 \seealso{
 \code{extract_todostates}, \code{extract_headlines},

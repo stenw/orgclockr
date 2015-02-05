@@ -15,6 +15,7 @@ test_that('Pattern for headlines.', {
      expect_equal(
          "** TODO TaskSix                                        :TagTwo:" %>%
              extract_headlines(), "TaskSix")
+     expect_equal(length(split_orgfile(orgfile)), 12)
 })
 
 test_that('Pattern for timestamps.', {
@@ -51,5 +52,5 @@ test_that('Test if the length of output of extract_ functions is correct. ', {
         extract_tags(orgfile),
         extract_categories(orgfile),
         extract_todostates(orgfile)
-        )), 4 * 11)
+        )), 5 * 12)
 })
