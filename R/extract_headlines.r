@@ -11,9 +11,10 @@
 ##' extract_headlines() %>%
 ##' last()
 ##' ## [1] "TODO TaskTen"
-##' @seealso \code{extract_todostates}, \code{extract_tags},
-##' \code{extract_timestamps}, \code{extract_levels} and
-##' \code{extract_categories} to extract other org elements.
+##' @seealso \code{extract_efforts}, \code{extract_todostates},
+##' \code{extract_tags}, \code{extract_timestamps},
+##' \code{extract_levels} and \code{extract_categories} to extract
+##' other org elements.
 extract_headlines <-
     function(x) {
         tags          <- extract_tags(x) %>% na.omit() %>%
