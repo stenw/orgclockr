@@ -17,7 +17,7 @@
 ##' other org elements.
 extract_headlines <-
     function(x) {
-        tags          <- extract_tags(x) %>% na.omit() %>%
+        tags          <- extract_tags(x, inherit = FALSE) %>% na.omit() %>%
             paste0(collapse = "|")
         keywords      <- extract_todostates(x) %>% na.omit() %>%
             paste0(collapse = "|")

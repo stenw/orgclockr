@@ -31,6 +31,5 @@ extract_timestamps <-
                     stringr::str_c()
             })
         timestamps[which(timestamps == "")] <- NA
-        ## unlist(timestamps) %>%
         return(timestamps)
     }
