@@ -46,6 +46,6 @@ extract_efforts <-
                                      as.numeric() %>%
                                      round(2)
             }) %>%
-                as.character() %>%
+                as.numeric() %>%
                 return()
     }

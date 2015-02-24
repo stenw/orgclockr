@@ -41,8 +41,17 @@ extract_todostates <-
         else {
             pat <- pattern
         }
-        x %>%
-            extract_raw_headlines() %>%
-            na.omit() %>%
-            stringr::str_extract(pat)
+        state <-
+            x %>%
+                extract_raw_headlines()
+        ## make sure to only extract todostates if the keyword is not
+        ## followed by more than one space and the beginning of a tag
+        test_pat <-
+            "^\\*{1, }\\s.+[[:upper:]]+((\\b)|(_[[:upper:]]+\\b))\\s{2, }(:[[:alnum:]]{1, }){1, }"
+        if (!stringr::str_detect(state, test_pat)) {
+            na.omit(state) %>%
+                stringr::str_extract(pat)
+        } else {
+            NA
+        }
     }
