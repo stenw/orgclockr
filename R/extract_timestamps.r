@@ -1,7 +1,9 @@
 ##' Extract the timestamps of an org file per headline.
 ##'
 ##' This function is used to extract the timestamps per headline
-##' matching a regular expression.
+##' matching a regular expression. An even number of timestamps per
+##' headline is expected, so org files with running clocks will fail
+##' to return the single timestamps and ignore them.
 ##' @param x org object as character vector.
 ##' @return the timestamps of an orgfile as a list.
 ##' @export extract_timestamps
@@ -14,10 +16,10 @@
 ##' ##  [4] "2015-01-19 Mo 22:12" "2015-01-19 Mo 21:43" "2015-01-19 Mo 21:44"
 ##' ##  [7] "2015-01-19 Mo 20:40" "2015-01-19 Mo 21:42" "2015-01-19 Mo 19:25"
 ##' ## [10] "2015-01-19 Mo 19:41" "2015-01-19 Mo 16:11" "2015-01-19 Mo 19:01"
-##' @seealso \code{extract_efforts}, \code{extract_todostates},
-##' \code{extract_headlines}, \code{extract_tags},
-##' \code{extract_levels} and \code{extract_categories} to extract
-##' other org elements.
+##' @seealso \code{extract_time_spent}, \code{extract_efforts},
+##' \code{extract_todostates}, \code{extract_headlines},
+##' \code{extract_tags}, \code{extract_levels} and
+##' \code{extract_categories} to extract other org elements.
 extract_timestamps <-
     function(x) {
         split_file <- split_orgfile(x)

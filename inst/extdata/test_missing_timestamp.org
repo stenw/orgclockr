@@ -1,0 +1,11 @@
+* TODO TaskTwo
+SCHEDULED: <2015-10-10 Sa +1y>
+:PROPERTIES:
+:Effort:   0:20
+:LAST_REPEAT: [2014-10-10 Fr 17:17]
+:END:
+:LOGBOOK:
+- State "DONE"       from "NEXT"       [2014-10-10 Fr 17:17]
+CLOCK: [2014-10-10 Fr 17:05]
+CLOCK: [2014-10-08 Mi 13:25]--[2014-10-08 Mi 13:34] =>  0:09
+:END:

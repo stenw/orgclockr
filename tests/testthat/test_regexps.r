@@ -1,4 +1,4 @@
-context("Regexp patterns to get elements from an org file.")
+context(" Check regexp patterns to get elements from an org file.")
 
 orgfile <-
     ## load raw datafile
