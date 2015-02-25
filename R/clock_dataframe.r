@@ -47,7 +47,7 @@ clock_dataframe <-
     function(x,
              units           = "mins",
              inherit_tags    = TRUE,
-             pattern_states  = "\\b[[:upper:]]+((\\b)|(_[[:upper:]]+\\b))",
+             pattern_states  = "\\b[[:upper:]]+((\\b)|(_[[:upper:]]+\\b))(?!(\\s{2}|\\t))",
              pattern_efforts = "^[ :]+Effort:") {
         Category   <- extract_categories(x)
         Tag        <- extract_tags(x, inherit = inherit_tags)

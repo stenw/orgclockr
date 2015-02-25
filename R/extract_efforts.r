@@ -30,7 +30,8 @@ extract_efforts <-
             lapply(seq_along(split_file), function(i) {
                 split_file[[i]] %>%
                     unlist() %>%
-                    extract_efforts_total(pattern = pat) %>%
+                    extract_efforts_total(pattern =
+                                              stringr::perl(pat)) %>%
                     paste0(collapse = " ")
             })
         efforts[which(efforts == "")] <- NA
