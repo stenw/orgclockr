@@ -14,24 +14,17 @@
 ##' readLines() %>%
 ##' extract_time_spent()
 ##' ##  [1]   0   0  21   0   0   2 232   0 122 152   2 334
-##' @seealso \code{extract_levels}, \code{extract_efforts},
-##' \code{extract_todostates}, \code{extract_headlines},
-##' \code{extract_timestamps}, \code{extract_tags} and
-##' \code{extract_categories} to extract other org elements.
+##' @seealso \code{extract_days_on_task}, \code{extract_levels},
+##' \code{extract_efforts}, \code{extract_todostates},
+##' \code{extract_headlines}, \code{extract_timestamps},
+##' \code{extract_tags} and \code{extract_categories} to extract other
+##' org elements.
 extract_time_spent <-
     function(x, units = "mins") {
-        extract_timestamps(x) %>%
-            sapply(function(x) strptime(x, "%Y-%m-%d %A %H:%M")) %>%
-            sapply(function(x) {
-                if (length(x) > 1) {
-                    odd <- seq(1, length(x), by = 2)
-                    diff(x)[odd] %>%
-                        sum() %>%
-                        as.numeric(units = units) %>%
-                        round(2)
-                } else {
-                    0
-                }
-            }) %>%
-                unlist()
+        extract_intervals(x, units = units) %>%
+            sapply(function(x) {sum(x) %>%
+                                    as.numeric() %>%
+                                    round(2)
+                            }) %>%
+                                unlist()
     }

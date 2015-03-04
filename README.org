@@ -1,0 +1,16 @@
+* Introduction to orgclockr
+** What's Org mode and why would I want to parse it?
+
+Corresponding to its description, the Emacs-mode [[http://orgmode.org/manual/index.html#Top][Org mode]] is an organizational tool that lives in the plain text world. Furthermore, it's a quite complex markup language. Complexity is not imposed though, jumping into it is adviced here. What sets Org mode apart other organizational tools is the seemingly flawless integration of a full-fledged task management solution into a flexible outliner.
+
+Org mode offers multiple options to filter by org elements: Filtering in an org file by todo keywords for example is achieved by =org-sparse-tree= which uses an overlay. This may be sufficient to get an overview in Org mode, but for presentational purposes this is not an option. Another way to filter by elements is using the =org-agenda= with =org-agenda-filter-by-tag= and similar filter functions. A filtered =org-agenda= can be exported to various formats via =org-agenda-write=, which provides a simple presentation of your current agenda. In my humble opinion though, there is still a need to repeatedly filter large org files by various org elements outside Emacs. This will especially pay off when Org mode is used for its clocking capabilities. I will elaborate on this in the next chapter.
+
+There are [[http://orgmode.org/worg/org-tools/][various parsers]] for elements in org files, even one in R ([[http://cran.r-project.org/web/packages/orgR/index.html][orgR]]) is available on CRAN. I recommend using orgR for quickly extracting the raw headings and timestamps of an org file, but the results on todo keywords and tags were certainly not satisfactory. =orgclockr= strives to provide more flexible extraction functions for the elements of org headings.
+
+** Clocking Work Time in Org mode
+
+Org mode allows to clock the time spent on a task. The relevant information is stored in timestamps in a drawer. Furthermore, to fix a time limit, Org mode uses an effort property. These elements will be parsed by =orgclockr= and the time spent, the average length of a clock interval, the period of time on a task and the effort set returned per task. These informations allow for a more detailed clock report than the built-in =org-clock-report= in Org mode.
+
+Learning to set efforts properly can only be done by experience. Therefore making clocking a habit is indispensable. Setting the right efforts is especially useful when breaking down large projects into manageable parts. While Org mode comes in useful when pointing out that you are exceeding the set effort on the currently clocked task, I'd like to have a more general view on my efforts set for a whole project. A graphical representation of the summed effort of outstanding work and the number of tasks to be completed taking deadlines into account is provided by a [[http://en.wikipedia.org/wiki/Burn_down_chart][burn down chart]]. This is one visualization of tasks, efforts and deadlines I want to provide in =orgclockr=.
+
+Another visualization I'd like to offer is a graphical representation of the time spent per task per day, allowing for a quick overview on main tasks per day.

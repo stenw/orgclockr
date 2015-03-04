@@ -12,19 +12,6 @@ extract_categories_total(x)
 the categories of an orgfile as a character vector.
 }
 \description{
-This function is used to extract the categories matching the
-regexp pattern.
-}
-\examples{
-system.file("extdata", "sample.org", package = "orgclockr") \%>\%
-readLines() \%>\%
-extract_categories_total() \%>\%
-first()
-## [1] "CategoryOne"
-}
-\seealso{
-\code{extract_todostates}, \code{extract_headlines},
-\code{extract_timestamps}, \code{extract_tags} and
-\code{extract_levels} to extract other org elements.
+Extract the categories of an org file.
 }
 

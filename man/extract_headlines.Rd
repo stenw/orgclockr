@@ -20,9 +20,10 @@ system.file("extdata", "sample.org", package = "orgclockr") \%>\%
 readLines() \%>\%
 extract_headlines() \%>\%
 last()
-## [1] "TODO TaskNine"
+## [1] "TaskTen"
 }
 \seealso{
+\code{extract_time_spent}, \code{extract_efforts},
 \code{extract_todostates}, \code{extract_tags},
 \code{extract_timestamps}, \code{extract_levels} and
 \code{extract_categories} to extract other org elements.

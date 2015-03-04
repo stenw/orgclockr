@@ -3,10 +3,13 @@
 \alias{extract_tags}
 \title{Extract the tags of an org file.}
 \usage{
-extract_tags(x)
+extract_tags(x, inherit = TRUE)
 }
 \arguments{
 \item{x}{org object as character vector.}
+
+\item{inherit}{logical; if \code{TRUE} (default), inherit tags
+from level one headlines.}
 }
 \value{
 the tags of an orgfile as a character vector.
@@ -21,17 +24,23 @@ be bundled in one character object separated by one space
 character. The headlines without any tag will give a \code{NA}
 value, effectively resulting in a vector of as many elements as
 the number of headlines in the org file.
+
+If the \code{inherit} parameter is set to TRUE (default), the
+function will make use of tag inheritance given by the org-mode
+variable \code{org-use-tag-inheritance}. So far, the inheritance
+only works for level one tags.
 }
 \examples{
 system.file("extdata", "sample.org", package = "orgclockr") \%>\%
 readLines() \%>\%
-extract_tags()
+extract_tags(inherit = FALSE)
 ##  [1] "TagOne"                 "TagTwo"                 NA
 ##  [4] NA                       "TagThree"               "TagTwo"
 ##  [7] "TagTwo"                 "TagOne TagThree TagTwo" NA
-## [10] NA                       NA
+## [10] NA                       NA                       NA
 }
 \seealso{
+\code{extract_time_spent}, \code{extract_efforts},
 \code{extract_todostates}, \code{extract_headlines},
 \code{extract_timestamps}, \code{extract_categories} and
 \code{extract_levels} to extract other org elements.

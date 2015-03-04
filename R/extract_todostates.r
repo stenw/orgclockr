@@ -27,14 +27,15 @@
 ##' extract_todostates()
 ##' ##  [1] NA      "TODO"  "TODO"  "TODO"  NA      "HABIT" "TODO"  NA      "DONE"
 ##' ## [10] "TODO"  "HOLD"  "TODO"
-##' @seealso \code{extract_time_spent}, \code{extract_efforts},
-##' \code{extract_timestamps}, \code{extract_headlines},
-##' \code{extract_tags}, \code{extract_levels} and
-##' \code{extract_categories} to extract other org elements.
+##' @seealso \code{extract_days_on_task}, \code{extract_time_spent},
+##' \code{extract_efforts}, \code{extract_timestamps},
+##' \code{extract_headlines}, \code{extract_tags},
+##' \code{extract_levels} and \code{extract_categories} to extract
+##' other org elements.
 extract_todostates <-
     function(x,
              pattern =
-                 "\\b[[:upper:]]+((\\b)|(_[[:upper:]]+\\b))(?!(\\s{2}|\\t))") {
+                 "\\b[[:upper:]]{2,}((\\b)|(_[[:upper:]]+\\b))(?!(\\s{2,}|\\t|$))") {
         if (is.vector(pattern)) {
             pat <-
                 pattern %>%

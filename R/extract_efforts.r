@@ -10,18 +10,19 @@
 ##' @param units unit of time used. \code{mins} and \code{hours} are
 ##' valid options.
 ##' @param x org object as character vector.
-##' @return the efforts set in an org file as a character vector.
+##' @return the efforts set in an org file as a numeric vector.
 ##' These have the format H:MM.
 ##' @export extract_efforts
 ##' @examples
 ##' system.file("extdata", "sample.org", package = "orgclockr") %>%
 ##' readLines() %>%
-##' extract_efforts() %>%
-##' ##  [1] NA    NA    "20"  NA    NA    NA    "60"  NA    "30"  "25"  "240" "25"
-##' @seealso \code{extract_time_spent}, \code{extract_categories},
-##' \code{extract_todostates}, \code{extract_headlines},
-##' \code{extract_timestamps}, \code{extract_tags} and
-##' \code{extract_levels} to extract other org elements.
+##' extract_efforts()
+##' ##  [1]  NA  NA  20  NA  NA  NA  60  NA  30  25 240  25
+##' @seealso \code{extract_days_on_task}, \code{extract_time_spent},
+##' \code{extract_categories}, \code{extract_todostates},
+##' \code{extract_headlines}, \code{extract_timestamps},
+##' \code{extract_tags} and \code{extract_levels} to extract other org
+##' elements.
 extract_efforts <-
     function(x, pattern = "^[ :]+Effort:", units = "mins") {
         split_file <- split_orgfile(x)
@@ -37,8 +38,8 @@ extract_efforts <-
         efforts[which(efforts == "")] <- NA
         unlist(efforts) %>%
             sapply(function(x) {
-                suppressWarnings(hm(x) %>%
-                                     period_to_seconds() /
+                suppressWarnings(lubridate::hm(x) %>%
+                                     lubridate::period_to_seconds() /
                                  if (units == "mins") {
                                      60
                                  } else if (units == "hours") {

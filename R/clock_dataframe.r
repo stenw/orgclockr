@@ -38,16 +38,16 @@
 ##' ## 1                <NA>                <NA>     NA
 ##' ## 2                <NA>                <NA>     NA
 ##' ## 3 2014-10-08 Mi 13:34 2014-10-10 Fr 17:05  51.52
-##' @seealso \code{extract_time_spent}, \code{extract_categories},
-##' \code{extract_todostates}, \code{extract_headlines},
-##' \code{extract_timestamps}, \code{extract_tags},
-##' \code{extract_efforts} and \code{extract_levels} to extract
-##' particular org elements.
+##' @seealso \code{extract_days_on_task}, \code{extract_time_spent},
+##' \code{extract_categories}, \code{extract_todostates},
+##' \code{extract_headlines}, \code{extract_timestamps},
+##' \code{extract_tags}, \code{extract_efforts} and
+##' \code{extract_levels} to extract particular org elements.
 clock_dataframe <-
     function(x,
              units           = "mins",
              inherit_tags    = TRUE,
-             pattern_states  = "\\b[[:upper:]]+((\\b)|(_[[:upper:]]+\\b))(?!(\\s{2}|\\t))",
+             pattern_states  = "\\b[[:upper:]]{2,}((\\b)|(_[[:upper:]]+\\b))(?!(\\s{2,}|\\t|$))",
              pattern_efforts = "^[ :]+Effort:") {
         Category   <- extract_categories(x)
         Tag        <- extract_tags(x, inherit = inherit_tags)
@@ -56,9 +56,10 @@ clock_dataframe <-
         State      <- extract_todostates(x, pattern = pattern_states)
         Effort     <- extract_efforts(x, pattern = pattern_efforts, units =
                                           units)
-        Last       <- lapply(extract_timestamps(x), first) %>%
+        timestamps <- extract_timestamps(x)
+        Last       <- lapply(timestamps, first) %>%
             unlist()
-        First      <- lapply(extract_timestamps(x), last) %>%
+        First      <- lapply(timestamps, last) %>%
             unlist()
         Period     <- difftime(lubridate::ymd_hm(Last),
                                lubridate::ymd_hm(First), units = units) %>%
@@ -70,15 +71,33 @@ clock_dataframe <-
                                    ## returning the absolute value
                                    abs() %>%
                                    round(2)
-        Time_Spent <- extract_time_spent(x, units = units)
+        intervals  <- extract_intervals(x, units = units)
+        DaysOnTask <- sapply(timestamps, function(x) {
+            as.Date(x) %>%
+                unique() %>%
+                length()
+        })
+        TimeSpent  <- sapply(intervals, function(x) {
+            sum(x) %>%
+                as.numeric() %>%
+                round(2)
+        }) %>%
+            unlist()
+        AvgClockInterval <- sapply(intervals, function(x) {
+            mean(x) %>%
+                as.numeric() %>%
+                round(2)
+        })
         cbind.data.frame(Category,
                          Tag,
                          Headline,
                          Level,
                          State,
                          Effort,
-                         Time_Spent,
+                         TimeSpent,
                          First,
                          Last,
-                         Period)
+                         Period,
+                         DaysOnTask,
+                         AvgClockInterval)
     }

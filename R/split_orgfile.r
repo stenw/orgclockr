@@ -11,8 +11,14 @@ split_orgfile <-
                 extract_raw_headlines() %>%
                 complete.cases() %>%
                 which()
-        x %>%
-            function(x) {
-                unname(split(x, cumsum(seq_along(x) %in% headline_ids)))
-            }
+        split_file <-
+            x %>%
+                function(x) {
+                    unname(split(x, cumsum(seq_along(x) %in% headline_ids)))
+                }
+        if (length(headline_ids) > 0 && headline_ids[1] != 1) {
+            return(split_file[2:length(split_file)])
+        } else {
+            return(split_file)
+        }
     }

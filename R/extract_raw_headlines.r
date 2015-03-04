@@ -5,5 +5,5 @@
 extract_raw_headlines <-
     function(x) {
         x %>%
-            stringr::str_match("^\\*{1, }\\s.+")
+            stringr::str_match("^\\*{1,}\\s.+")
     }

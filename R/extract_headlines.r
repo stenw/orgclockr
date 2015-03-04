@@ -10,26 +10,28 @@
 ##' readLines() %>%
 ##' extract_headlines() %>%
 ##' last()
-##' ## [1] "TODO TaskTen"
-##' @seealso \code{extract_time_spent}, \code{extract_efforts},
-##' \code{extract_todostates}, \code{extract_tags},
-##' \code{extract_timestamps}, \code{extract_levels} and
-##' \code{extract_categories} to extract other org elements.
+##' ## [1] "TaskTen"
+##' @seealso \code{extract_days_on_task}, \code{extract_time_spent},
+##' \code{extract_efforts}, \code{extract_todostates},
+##' \code{extract_tags}, \code{extract_timestamps},
+##' \code{extract_levels} and \code{extract_categories} to extract
+##' other org elements.
 extract_headlines <-
     function(x) {
-        tags          <- extract_tags(x, inherit = FALSE) %>% na.omit() %>%
-            paste0(collapse = "|")
-        keywords      <- extract_todostates(x) %>% na.omit() %>%
-            paste0(collapse = "|")
-        replace_this  <- c(tags, keywords, ":") %>% paste0(collapse = "|")
         headlines     <-
             x %>%
                 extract_raw_headlines()
         lapply(seq_along(headlines), function(i) {
             headlines[i] %>%
-                stringr::str_replace("^\\*{1, }\\ ", "") %>%
-                stringr::str_replace_all(replace_this, "") %>%
-                stringr::str_trim()
+                stringr::str_replace("^\\*{1,}\\s{1,}", "") %>%
+                ## remove tags
+                stringr::str_replace_all("(:[[:alnum:]]{1,}){1,}:$", "") %>%
+                ## remove keywords
+                stringr::str_replace_all(
+                    stringr::perl(
+                        "^\\b[[:upper:]]{2,}((\\b)|(_[[:upper:]]+\\b))(?!(\\s{2,}|\\t|$))"),
+                    "") %>%
+                        stringr::str_trim()
         }) %>%
             unlist() %>%
             na.omit() %>%
