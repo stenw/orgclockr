@@ -21,26 +21,18 @@ CLOCK: [2014-10-08 Mi 13:25]--[2014-10-08 Mi 13:34] =>  0:09
 :END:
 
 ** HABIT TaskFive                                                              :TagTwo:
+DEADLINE: <2014-01-04 Sa>
 :PROPERTIES:
 :STYLE:    habit
 :LAST_REPEAT: [2014-01-04 Sa 09:23]
 :END:
 :LOGBOOK:
-- State "DONE"       from "TODO"       [2014-01-04 Sa 09:23]
-- State "DONE"       from "TODO"       [2014-01-03 Fr 09:45]
-- State "CANCELED"   from "TODO"       [2013-12-28 Sa 06:37]
-- State "CANCELED"   from "TODO"       [2013-12-28 Sa 06:37]
-- State "DONE"       from "TODO"       [2013-12-26 Do 21:05]
-- State "CANCELED"   from "TODO"       [2013-12-23 Mo 17:39]
-- State "DONE"       from "TODO"       [2013-12-23 Mo 13:23]
-- State "DONE"       from "TODO"       [2013-12-18 Mi 23:23]
-- State "DONE"       from "TODO"       [2013-12-12 Do 17:45]
-- State "DONE"       from "TODO"       [2013-12-09 Mo 22:47]
-- State "DONE"       from "TODO"       [2013-12-06 Fr 06:12]
-- State "DONE"       from "TODO"       [2013-11-25 Mo 23:55]
-- State "DONE"       from "TODO"       [2013-11-24 So 11:36]
-- State "DONE"       from "TODO"       [2013-11-22 Fr 06:51]
-CLOCK: [2013-11-18 Mo 16:05]--[2013-11-18 Mo 16:07] =>  0:02
+CLOCK: [2015-03-01 So 11:57]--[2015-03-01 So 12:00] =>  0:03
+CLOCK: [2015-03-01 So 11:52]--[2015-03-01 So 11:55] =>  0:03
+CLOCK: [2015-02-28 Sa 16:24]--[2015-02-28 Sa 16:26] =>  0:02
+CLOCK: [2015-02-28 Sa 15:11]--[2015-02-28 Sa 15:16] =>  0:05
+CLOCK: [2015-02-28 Sa 14:37]--[2015-02-28 Sa 14:48] =>  0:11
+CLOCK: [2015-02-28 Sa 13:53]--[2015-02-28 Sa 14:26] =>  0:33
 :END:
 
 ** TODO TaskSix                                                                   :TagTwo:

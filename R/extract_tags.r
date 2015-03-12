@@ -26,11 +26,11 @@
 ##' ##  [4] NA                       "TagThree"               "TagTwo"
 ##' ##  [7] "TagTwo"                 "TagOne TagThree TagTwo" NA
 ##' ## [10] NA                       NA                       NA
-##' @seealso \code{extract_days_on_task}, \code{extract_time_spent},
-##' \code{extract_efforts}, \code{extract_todostates},
-##' \code{extract_headlines}, \code{extract_timestamps},
-##' \code{extract_categories} and \code{extract_levels} to extract
-##' other org elements.
+##' @seealso \code{extract_intervals}, \code{extract_days_on_task},
+##' \code{extract_time_spent}, \code{extract_efforts},
+##' \code{extract_todostates}, \code{extract_headlines},
+##' \code{extract_timestamps}, \code{extract_categories} and
+##' \code{extract_levels} to extract other org elements.
 extract_tags <-
     function(x, inherit = TRUE) {
         tags <-

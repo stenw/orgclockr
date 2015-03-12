@@ -3,12 +3,12 @@ Title: Extract the elements from an Org-mode file.
 Version: 0.1
 Authors@R: 'Bernhard Proell <bmutbuerger@gmail.com> [aut, cre]'
 Description: A tool to extract the elements of an Org-mode file.
-    The aggregated elements in the clock_dataframe() allow for sorting
+    The aggregated elements in the org_elements_df() allow for sorting
     by the time spent on a task, the effort set, the todo states and
     many more.
 Depends:
     R (>= 3.1.0),
-    dplyr (>= 0.3.0.2)
+    dplyr (>= 0.4.1)
 Imports:
     stringr (>= 0.6.2),
     lubridate (>= 1.3.3)
@@ -17,4 +17,6 @@ LazyData: true
 VignetteBuilder: knitr
 Suggests:
     testthat,
-    knitr
+    knitr,
+    ggplot2,
+    zoo

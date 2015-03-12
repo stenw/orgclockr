@@ -20,7 +20,7 @@ test_that('Pattern for headlines.', {
 
 test_that('Pattern for timestamps.', {
     expect_equal(class(extract_timestamps(orgfile)), "list")
-    expect_equal(extract_timestamps(orgfile[82])[[1]] %>% length(), 2)
+    expect_equal(extract_timestamps(orgfile[83])[[1]] %>% length(), 2)
 })
 
 test_that('Pattern for categories.', {

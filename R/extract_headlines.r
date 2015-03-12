@@ -11,14 +11,14 @@
 ##' extract_headlines() %>%
 ##' last()
 ##' ## [1] "TaskTen"
-##' @seealso \code{extract_days_on_task}, \code{extract_time_spent},
-##' \code{extract_efforts}, \code{extract_todostates},
-##' \code{extract_tags}, \code{extract_timestamps},
-##' \code{extract_levels} and \code{extract_categories} to extract
-##' other org elements.
+##' @seealso \code{extract_intervals}, \code{extract_days_on_task},
+##' \code{extract_time_spent}, \code{extract_efforts},
+##' \code{extract_todostates}, \code{extract_tags},
+##' \code{extract_timestamps}, \code{extract_levels} and
+##' \code{extract_categories} to extract other org elements.
 extract_headlines <-
     function(x) {
-        headlines     <-
+        headlines <-
             x %>%
                 extract_raw_headlines()
         lapply(seq_along(headlines), function(i) {

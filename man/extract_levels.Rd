@@ -23,6 +23,7 @@ extract_levels()
 ##  [1] 1 2 2 2 1 2 2 1 2 2 3 2
 }
 \seealso{
+\code{extract_intervals}, \code{extract_days_on_task},
 \code{extract_time_spent}, \code{extract_efforts},
 \code{extract_todostates}, \code{extract_headlines},
 \code{extract_timestamps}, \code{extract_tags} and

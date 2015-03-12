@@ -23,6 +23,7 @@ last()
 ## [1] "TaskTen"
 }
 \seealso{
+\code{extract_intervals}, \code{extract_days_on_task},
 \code{extract_time_spent}, \code{extract_efforts},
 \code{extract_todostates}, \code{extract_tags},
 \code{extract_timestamps}, \code{extract_levels} and

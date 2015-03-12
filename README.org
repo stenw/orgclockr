@@ -1,3 +1,7 @@
+#+PROPERTY: header-args:r :session :width 800 :exports both :colnames yes
+#+OPTIONS: toc:nil
+#+AUTHOR: Bernhard Pröll
+
 * Introduction to orgclockr
 ** What's Org mode and why would I want to parse it?
 
@@ -14,3 +18,160 @@ Org mode allows to clock the time spent on a task. The relevant information is s
 Learning to set efforts properly can only be done by experience. Therefore making clocking a habit is indispensable. Setting the right efforts is especially useful when breaking down large projects into manageable parts. While Org mode comes in useful when pointing out that you are exceeding the set effort on the currently clocked task, I'd like to have a more general view on my efforts set for a whole project. A graphical representation of the summed effort of outstanding work and the number of tasks to be completed taking deadlines into account is provided by a [[http://en.wikipedia.org/wiki/Burn_down_chart][burn down chart]]. This is one visualization of tasks, efforts and deadlines I want to provide in =orgclockr=.
 
 Another visualization I'd like to offer is a graphical representation of the time spent per task per day, allowing for a quick overview on main tasks per day.
+
+** Examples
+
+#+BEGIN_SRC r :results value
+org_clock_df(orgfile) %>%
+    group_by(Headline) %>%
+    summarise(DaysOnTask = n())
+#+END_SRC
+
+#+ATTR_HTML: :border 2 :rules all :frame border :align center
+#+CAPTION: Days on task
+#+RESULTS:
+| Headline  | DaysOnTask |
+|-----------+------------|
+| TaskEight |          2 |
+| TaskFive  |          2 |
+| TaskNine  |          1 |
+| TaskSeven |          1 |
+| TaskSix   |          5 |
+| TaskTen   |          1 |
+| TaskTwo   |          2 |
+
+#+BEGIN_SRC r :results graphics :file "/home/bernhard/R-programming/images/a.png"
+library(zoo)
+
+org_clock_df(orgfile) %>%
+    select(Date, TimeSpentPerDay) %>%
+    filter(between(Date, Sys.Date() - 90, Sys.Date())) %>%
+    as.data.frame() %>%
+    read.zoo(index.column = "Date") %>%
+    autoplot.zoo(stat = "identity",
+                 geom = "bar") +
+                     scale_fill_gradient2(trans = "sqrt") +
+                     aes(fill = Value) +
+                     guides(fill = FALSE) +
+                     theme_classic() +
+                     ylab("Time Spent (min)") +
+                     xlab("Date")
+#+END_SRC
+
+#+CAPTION: Visualize the time spent per day for the last 3 months
+#+RESULTS:
+[[file:/home/bernhard/R-programming/images/a.png]]
+
+#+BEGIN_SRC r :results graphics :file "/home/bernhard/R-programming/images/b.png"
+org_clock_df(orgfile) %>%
+    select(Date, Headline) %>%
+    filter(between(Date, Sys.Date() - 90, Sys.Date())) %>%
+    as.data.frame() %>%
+    read.zoo(index.column = "Date") %>%
+    autoplot.zoo(stat = "identity",
+                 geom = "line") +
+                     scale_color_brewer(type = "qual",
+                                        palette = 2) +
+                     aes(size	= 1,
+                         colour = Value) +
+                     guides(size	= FALSE,
+                            colour	= FALSE) +
+                     theme_classic() +
+                     ylab("Task") + xlab("Date")
+#+END_SRC
+
+#+CAPTION: A very simple Gantt diagram
+#+RESULTS:
+[[file:/home/bernhard/R-programming/images/b.png]]
+
+#+BEGIN_SRC r :results value
+org_clock_df(orgfile) %>%
+    filter(between(Date, Sys.Date() - 60, Sys.Date())) %>%
+    group_by(Date, Headline) %>%
+    summarise(TimeSpentPerDay) %>%
+    ungroup() %>%
+    arrange(desc(TimeSpentPerDay))
+#+END_SRC
+
+#+ATTR_HTML: :border 2 :rules all :frame border :align center
+#+CAPTION: Filtering the last 60 days and sort by time spent
+#+RESULTS:
+|       Date | Headline  | TimeSpentPerDay |
+|------------+-----------+-----------------|
+| 2015-01-19 | TaskTen   |             334 |
+| 2015-01-20 | TaskEight |             129 |
+| 2015-02-28 | TaskFive  |              51 |
+| 2015-02-05 | TaskEight |              23 |
+| 2015-03-01 | TaskFive  |               6 |
+| 2015-01-19 | TaskNine  |               2 |
+
+#+BEGIN_SRC r :results graphics :file "/home/bernhard/R-programming/images/c.png"
+Palette <- c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2",
+             "#D55E00")
+org_clock_df(orgfile) %>%
+    group_by(Headline) %>%
+    summarise(TimeSpentPerDay = sum(TimeSpentPerDay)) %>%
+    ggplot(aes(Headline, sort(TimeSpentPerDay, decreasing = TRUE),
+               fill = Palette)) +
+                   geom_bar(stat  = "identity",
+                            width = .5) +
+                   theme_classic() +
+                   guides(fill = FALSE) +
+                   labs(x = "Task", y = "Time Spent (min)")
+#+END_SRC
+
+#+CAPTION: Plotting the time spent total per task
+#+RESULTS:
+[[file:/home/bernhard/R-programming/images/c.png]]
+
+Joining the =org_clock_df= and the =org_elements_df=
+
+#+BEGIN_SRC r :results value
+a_df <- org_clock_df(orgfile)
+b_df <- org_elements_df(orgfile)
+left_join(a_df, b_df) %>%
+    group_by(Date, Headline) %>%
+    summarise(TimeSpentTotal = sum(TimeSpentPerDay), Effort) %>%
+    filter(Effort < TimeSpentTotal) %>%
+    mutate(Overdue = TimeSpentTotal - Effort) %>%
+    ungroup() %>%
+    arrange(desc(Overdue))
+#+END_SRC
+
+#+ATTR_HTML: :border 2 :rules all :frame border :align center
+#+CAPTION: Sorting tasks by the amount of time they are overdue
+#+RESULTS:
+|       Date | Headline  | TimeSpentTotal | Effort | Overdue |
+|------------+-----------+----------------+--------+---------|
+| 2015-01-19 | TaskTen   |            334 |     25 |     309 |
+| 2015-01-20 | TaskEight |            129 |     25 |     104 |
+| 2015-01-05 | TaskSeven |            122 |     30 |      92 |
+| 2014-12-21 | TaskSix   |             90 |     60 |      30 |
+
+#+BEGIN_SRC r :results graphics :file "/home/bernhard/R-programming/images/d.png"
+library(tidyr)
+
+left_join(a_df, b_df) %>%
+    select(Date, Headline, TimeSpentPerDay, Effort) %>%
+    filter(!is.na(Effort)) %>%
+    group_by(Headline) %>%
+    summarise(TimeSpent = sum(TimeSpentPerDay),
+              Effort = unique(Effort)) %>%
+                  tidyr::gather(Variable, Value, TimeSpent:Effort) %>%
+                  as.data.frame() %>%
+                  ggplot() +
+                  aes(Headline, sort(Value, decreasing = TRUE),
+                      fill = Variable) +
+                          scale_fill_brewer(type = "qual",
+                                            palette = 7) +
+                          geom_bar(stat		= "identity",
+                                   position	= "dodge") +
+                                       theme_classic() +
+                                       theme(legend.title	= element_blank(),
+                                             legend.position	= "bottom") +
+                          labs(x = "Task", y = "Time (min)")
+#+END_SRC
+
+#+CAPTION: Compare the time spent per task with the effort set to it
+#+RESULTS:
+[[file:/home/bernhard/R-programming/images/d.png]]

@@ -28,6 +28,7 @@ last()
 ## [10] "2015-01-19 Mo 19:41" "2015-01-19 Mo 16:11" "2015-01-19 Mo 19:01"
 }
 \seealso{
+\code{extract_intervals}, \code{extract_days_on_task},
 \code{extract_time_spent}, \code{extract_efforts},
 \code{extract_todostates}, \code{extract_headlines},
 \code{extract_tags}, \code{extract_levels} and

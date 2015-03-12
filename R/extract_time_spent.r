@@ -3,7 +3,7 @@
 ##' This function calculates the difference for each pair of clocking
 ##' timestamps and returns the sum of differences per headline. This
 ##' expects an even number of timestamps per headline, so in org files
-##' with running clocks the missing timestamps will be ignored.
+##' with running clocks the lonely timestamp will be ignored.
 ##' @param x org object as character vector.
 ##' @param units unit of time used.
 ##' @return a vector of doubles in the timeformat given by the
@@ -14,17 +14,22 @@
 ##' readLines() %>%
 ##' extract_time_spent()
 ##' ##  [1]   0   0  21   0   0   2 232   0 122 152   2 334
-##' @seealso \code{extract_days_on_task}, \code{extract_levels},
-##' \code{extract_efforts}, \code{extract_todostates},
-##' \code{extract_headlines}, \code{extract_timestamps},
-##' \code{extract_tags} and \code{extract_categories} to extract other
-##' org elements.
+##' @seealso \code{extract_intervals}, \code{extract_days_on_task},
+##' \code{extract_levels}, \code{extract_efforts},
+##' \code{extract_todostates}, \code{extract_headlines},
+##' \code{extract_timestamps}, \code{extract_tags} and
+##' \code{extract_categories} to extract other org elements.
 extract_time_spent <-
     function(x, units = "mins") {
-        extract_intervals(x, units = units) %>%
-            sapply(function(x) {sum(x) %>%
-                                    as.numeric() %>%
-                                    round(2)
-                            }) %>%
-                                unlist()
+        intervals <- extract_intervals(x, units = units)
+        if (is.list(intervals)) {
+            sapply(intervals, function(x) {
+                sum(x) %>%
+                    as.numeric() %>%
+                    round(2)
+            }) %>%
+                unlist()
+        } else {
+            sum(intervals)
+        }
     }
