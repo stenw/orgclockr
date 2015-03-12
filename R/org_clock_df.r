@@ -49,6 +49,7 @@ org_clock_df <-
                 dplyr::summarise(TimeSpentPerDay  = sum(Time),
                                  AvgClockInterval = mean(Time) %>%
                                     round(2),
+                                 NIntervals = n(),
                                  Period           = unique(Period)) %>%
                                      na.omit() %>%
                                      dplyr::ungroup()

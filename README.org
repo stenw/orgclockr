@@ -40,6 +40,29 @@ org_clock_df(orgfile) %>%
 | TaskTen   |          1 |
 | TaskTwo   |          2 |
 
+#+BEGIN_SRC r :results value :colnames yes
+org_clock_df(orgfile) %>%
+    group_by(Date) %>%
+    summarise(AvgTimeOnTask = mean(AvgClockInterval))
+#+END_SRC
+
+#+RESULTS:
+|       Date | AvgTimeOnTask |
+|------------+---------------|
+| 2014-10-08 |             9 |
+| 2014-10-10 |            12 |
+| 2014-12-21 |            90 |
+| 2014-12-22 |            25 |
+| 2014-12-28 |            60 |
+| 2014-12-31 |            23 |
+| 2015-01-01 |            34 |
+| 2015-01-05 |           122 |
+| 2015-01-19 |        28.835 |
+| 2015-01-20 |           129 |
+| 2015-02-05 |          11.5 |
+| 2015-02-28 |         12.75 |
+| 2015-03-01 |             3 |
+
 #+BEGIN_SRC r :results graphics :file "/home/bernhard/R-programming/images/a.png"
 library(zoo)
 
