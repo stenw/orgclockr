@@ -3,8 +3,8 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<title>README</title>
-<!-- 2015-03-12 Do 11:02 -->
+<title>orgclockr</title>
+<!-- 2015-03-12 Do 21:43 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="Bernhard Pröll" />
@@ -88,6 +88,8 @@
     { background-color: #ffff00; color: #000000; font-weight: bold; }
   /*]]>*/-->
 </style>
+<link rel="stylesheet" type="text/css" href="../css/orgish.css" />
+<link rel="stylesheet" type="text/css" href="../css/table.css/" />
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -137,7 +139,7 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="content">
-<h1 class="title">README</h1>
+<h1 class="title">orgclockr</h1>
 
 <div id="outline-container-sec-1" class="outline-2">
 <h2 id="sec-1"><span class="section-number-2">1</span> Introduction to orgclockr</h2>
@@ -241,10 +243,71 @@ Another visualization I'd like to offer is a graphical representation of the tim
 
 <div class="org-src-container">
 
+<pre class="src src-r">org_clock_df(orgfile) %&gt;%
+    group_by(Headline) %&gt;%
+    summarise(AvgTimeOnTask = round(sum(TimeSpent)/sum(NIntervals), 2)) %&gt;%
+    arrange(desc(AvgTimeOnTask))
+</pre>
+</div>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="all" frame="border" align="center">
+<caption class="t-above"><span class="table-number">Table 2:</span> The average clock interval per task</caption>
+
+<colgroup>
+<col  class="left" />
+
+<col  class="right" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">Headline</th>
+<th scope="col" class="right">AvgTimeOnTask</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">TaskSeven</td>
+<td class="right">122</td>
+</tr>
+
+<tr>
+<td class="left">TaskTen</td>
+<td class="right">55.67</td>
+</tr>
+
+<tr>
+<td class="left">TaskEight</td>
+<td class="right">50.67</td>
+</tr>
+
+<tr>
+<td class="left">TaskSix</td>
+<td class="right">46.4</td>
+</tr>
+
+<tr>
+<td class="left">TaskTwo</td>
+<td class="right">10.5</td>
+</tr>
+
+<tr>
+<td class="left">TaskFive</td>
+<td class="right">9.5</td>
+</tr>
+
+<tr>
+<td class="left">TaskNine</td>
+<td class="right">2</td>
+</tr>
+</tbody>
+</table>
+
+<div class="org-src-container">
+
 <pre class="src src-r">library(zoo)
 
 org_clock_df(orgfile) %&gt;%
-    select(Date, TimeSpentPerDay) %&gt;%
+    select(Date, TimeSpent) %&gt;%
     filter(between(Date, Sys.Date() - 90, Sys.Date())) %&gt;%
     as.data.frame() %&gt;%
     read.zoo(index.column = "Date") %&gt;%
@@ -263,7 +326,7 @@ org_clock_df(orgfile) %&gt;%
 <div class="figure">
 <p><img src="file:///home/bernhard/R-programming/images/a.png" alt="a.png" />
 </p>
-<p><span class="figure-number">Figure 1:</span> Visualize the time spent per day for the last 3 months</p>
+<p><span class="figure-number">Figure 1:</span> The time spent per day for the last 3 months</p>
 </div>
 
 <div class="org-src-container">
@@ -277,7 +340,7 @@ org_clock_df(orgfile) %&gt;%
                  geom = "line") +
                      scale_color_brewer(type = "qual",
                                         palette = 2) +
-                     aes(size	= 1.5,
+                     aes(size	= 1,
                          colour = Value) +
                      guides(size	= FALSE,
                             colour	= FALSE) +
@@ -290,7 +353,7 @@ org_clock_df(orgfile) %&gt;%
 <div class="figure">
 <p><img src="file:///home/bernhard/R-programming/images/b.png" alt="b.png" />
 </p>
-<p><span class="figure-number">Figure 2:</span> A very simple Gantt diagram</p>
+<p><span class="figure-number">Figure 2:</span> A very simple retrospective Gantt chart diagram</p>
 </div>
 
 <div class="org-src-container">
@@ -298,14 +361,14 @@ org_clock_df(orgfile) %&gt;%
 <pre class="src src-r">org_clock_df(orgfile) %&gt;%
     filter(between(Date, Sys.Date() - 60, Sys.Date())) %&gt;%
     group_by(Date, Headline) %&gt;%
-    summarise(TimeSpentPerDay) %&gt;%
+    summarise(TimeSpent) %&gt;%
     ungroup() %&gt;%
-    arrange(desc(TimeSpentPerDay))
+    arrange(desc(TimeSpent))
 </pre>
 </div>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="all" frame="border" align="center">
-<caption class="t-above"><span class="table-number">Table 2:</span> Filtering the last 60 days and sort by time spent</caption>
+<caption class="t-above"><span class="table-number">Table 3:</span> Filtering the last 60 days and sort by time spent</caption>
 
 <colgroup>
 <col  class="right" />
@@ -318,7 +381,7 @@ org_clock_df(orgfile) %&gt;%
 <tr>
 <th scope="col" class="right">Date</th>
 <th scope="col" class="left">Headline</th>
-<th scope="col" class="right">TimeSpentPerDay</th>
+<th scope="col" class="right">TimeSpent</th>
 </tr>
 </thead>
 <tbody>
@@ -366,8 +429,8 @@ org_clock_df(orgfile) %&gt;%
              "#D55E00")
 org_clock_df(orgfile) %&gt;%
     group_by(Headline) %&gt;%
-    summarise(TimeSpentPerDay = sum(TimeSpentPerDay)) %&gt;%
-    ggplot(aes(Headline, sort(TimeSpentPerDay, decreasing = TRUE),
+    summarise(TimeSpent = sum(TimeSpent)) %&gt;%
+    ggplot(aes(Headline, sort(TimeSpent, decreasing = TRUE),
                fill = Palette)) +
                    geom_bar(stat  = "identity",
                             width = .5) +
@@ -394,7 +457,7 @@ Joining the <code>org_clock_df</code> and the <code>org_elements_df</code>
 b_df &lt;- org_elements_df(orgfile)
 left_join(a_df, b_df) %&gt;%
     group_by(Date, Headline) %&gt;%
-    summarise(TimeSpentTotal = sum(TimeSpentPerDay), Effort) %&gt;%
+    summarise(TimeSpentTotal = sum(TimeSpent), Effort) %&gt;%
     filter(Effort &lt; TimeSpentTotal) %&gt;%
     mutate(Overdue = TimeSpentTotal - Effort) %&gt;%
     ungroup() %&gt;%
@@ -403,7 +466,7 @@ left_join(a_df, b_df) %&gt;%
 </div>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="all" frame="border" align="center">
-<caption class="t-above"><span class="table-number">Table 3:</span> Sorting tasks by the amount of time they are overdue</caption>
+<caption class="t-above"><span class="table-number">Table 4:</span> Sorting tasks by the amount of time they are overdue</caption>
 
 <colgroup>
 <col  class="right" />
@@ -465,15 +528,15 @@ left_join(a_df, b_df) %&gt;%
 <pre class="src src-r">library(tidyr)
 
 left_join(a_df, b_df) %&gt;%
-    select(Date, Headline, TimeSpentPerDay, Effort) %&gt;%
+    select(Date, Headline, TimeSpent, Effort) %&gt;%
     filter(!is.na(Effort)) %&gt;%
     group_by(Headline) %&gt;%
-    summarise(TimeSpent = sum(TimeSpentPerDay),
+    summarise(TimeSpent = sum(TimeSpent),
               Effort = unique(Effort)) %&gt;%
                   tidyr::gather(Variable, Value, TimeSpent:Effort) %&gt;%
                   as.data.frame() %&gt;%
                   ggplot() +
-                  aes(Headline, sort(Value, decreasing = TRUE),
+                  aes(Headline, Value,
                       fill = Variable) +
                           scale_fill_brewer(type = "qual",
                                             palette = 7) +
@@ -490,15 +553,96 @@ left_join(a_df, b_df) %&gt;%
 <div class="figure">
 <p><img src="file:///home/bernhard/R-programming/images/d.png" alt="d.png" />
 </p>
-<p><span class="figure-number">Figure 4:</span> Compare the time spent per task with the effort set to it</p>
+<p><span class="figure-number">Figure 4:</span> Compare the time spent per task to the effort set</p>
 </div>
+
+<p>
+We got a striking example of mostly under estimates and one over estimate. This obviously should be avoided. The preceeding plot clearly suggests horrible work efficiency rates for the tasks depicted with the sole exception of <code>TaskTwo</code> near the desired value of one:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-r">left_join(a_df, b_df) %&gt;%
+    select(Date, Headline, TimeSpent, Effort) %&gt;%
+    filter(!is.na(Effort)) %&gt;%
+    group_by(Headline) %&gt;%
+    summarise(TimeSpent = sum(TimeSpent),
+              Effort = unique(Effort)) %&gt;%
+                  mutate(EfficiencyRate = round(Effort/TimeSpent, 2))
+</pre>
+</div>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="right" />
+
+<col  class="right" />
+
+<col  class="right" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">Headline</th>
+<th scope="col" class="right">TimeSpent</th>
+<th scope="col" class="right">Effort</th>
+<th scope="col" class="right">EfficiencyRate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">TaskEight</td>
+<td class="right">152</td>
+<td class="right">25</td>
+<td class="right">0.16</td>
+</tr>
+
+<tr>
+<td class="left">TaskNine</td>
+<td class="right">2</td>
+<td class="right">240</td>
+<td class="right">120</td>
+</tr>
+
+<tr>
+<td class="left">TaskSeven</td>
+<td class="right">122</td>
+<td class="right">30</td>
+<td class="right">0.25</td>
+</tr>
+
+<tr>
+<td class="left">TaskSix</td>
+<td class="right">232</td>
+<td class="right">60</td>
+<td class="right">0.26</td>
+</tr>
+
+<tr>
+<td class="left">TaskTen</td>
+<td class="right">334</td>
+<td class="right">25</td>
+<td class="right">0.07</td>
+</tr>
+
+<tr>
+<td class="left">TaskTwo</td>
+<td class="right">21</td>
+<td class="right">20</td>
+<td class="right">0.95</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Bernhard Pröll</p>
-<p class="date">Created: 2015-03-12 Do 11:02</p>
+<p class="date">Created: 2015-03-12 Do 21:43</p>
 <p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.10)</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>

@@ -1,4 +1,44 @@
-org_clock_df <-
+##' Aggregate the clocking information of an org file.
+##'
+##' This function creates a \code{dplyr::data_frame} object that
+##' aggregates the clocking information in each heading. In addition,
+##' the period between the first and last timestamp stored per task is
+##' returned in the 'Period' column. The values in 'Period' disregard
+##' the 'Date' and should be seen more generally as a measure of how
+##' much time this task took to complete. It's the time spanning from
+##' the first time ever clocked in and the last time ever clocked out.
+##' The values in 'TimeSpent' tell how much time in total a task took
+##' on a given day. For simplicity reasons, intervals are not split at
+##' midnight. Keep this in mind when clocking for long periods of time
+##' spanning from one day to the next. The 'AvgClockInterval' is a
+##' measure of how long on average a task has been clocked on the day
+##' given in the 'Date' column. The 'NIntervals' column returns the
+##' number of clock intervals for the day on a task. The unit of time
+##' in the columns 'TimeSpent', 'AvgClockInterval' and 'Period' is
+##' controlled by the \code{units} parameter.
+##'
+##' Org mode uses the standard ISO notation for dates and times as it
+##' is defined in ISO 8601. The format is set in
+##' \code{org-time-stamp-custom-formats}. If this variable is
+##' modified, the extraction of 'Dates' is likely to fail.
+##' @param x org object as character vector.
+##' @param units unit of time used in the columns 'TimeSpent',
+##' 'AvgClockInterval' and 'Period'.
+##' @return a \code{dplyr::data_frame} object.
+##' @export org_clock_df
+##' @examples
+##' system.file("extdata", "sample.org", package = "orgclockr") %>%
+##' readLines() %>%
+##' org_clock_df() %>%
+##' head(4)
+##' ## Source: local data frame [4 x 6]
+##' ##
+##' ##    Headline       Date TimeSpent AvgClockInterval NIntervals Period
+##' ## 1 TaskEight 2015-01-20       129           129.00          1  23085
+##' ## 2 TaskEight 2015-02-05        23            11.50          2  23085
+##' ## 3  TaskFive 2015-02-28        51            12.75          4   1291
+##' ## 4  TaskFive 2015-03-01         6             3.00          2   1291
+  org_clock_df <-
     function(x, units = "mins") {
         intervals       <- extract_intervals(x, units = units)
         timestamps      <- extract_timestamps(x)
@@ -46,7 +86,7 @@ org_clock_df <-
                              round(2)
             ) %>%
                 dplyr::group_by(Headline, Date) %>%
-                dplyr::summarise(TimeSpentPerDay  = sum(Time),
+                dplyr::summarise(TimeSpent        = sum(Time),
                                  AvgClockInterval = mean(Time) %>%
                                     round(2),
                                  NIntervals = n(),

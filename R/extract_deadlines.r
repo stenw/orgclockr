@@ -2,7 +2,13 @@
 ##'
 ##' This function extracts the timestamps in lines that match the
 ##' \code{pattern}. According to \code{org-deadline-string} these
-##' lines should start with "DEADLINE:".
+##' lines should start with "DEADLINE:". The returned value is in the
+##' format \code{\%Y-\%m-\%d}, so hours and minutes will be omitted.
+##'
+##' Org mode uses the standard ISO notation for dates and times as it
+##' is defined in ISO 8601. The format is set in
+##' \code{org-time-stamp-custom-formats}. If this variable is
+##' modified, the extraction is likely to fail.
 ##' @param x org object as character vector.
 ##' @param pattern a regular expression to match the deadlines set in
 ##' the org file.
@@ -12,9 +18,9 @@
 ##' system.file("extdata", "sample.org", package = "orgclockr") %>%
 ##' readLines() %>%
 ##' extract_deadlines()
-##' ##  [1] NA              NA              NA              NA
-##' ##  [5] NA              "2014-01-04 Sa" NA              NA
-##' ##  [9] NA              NA              NA              NA
+##' ##  [1] NA           NA           NA           NA           NA
+##' ##  [6] "2014-01-04" NA           NA           NA           NA
+##' ## [11] NA           NA
 ##' @seealso \code{extract_intervals}, \code{extract_days_on_task},
 ##' \code{extract_time_spent}, \code{extract_categories},
 ##' \code{extract_todostates}, \code{extract_headlines},
@@ -40,5 +46,7 @@ extract_deadlines <-
                     stringr::str_replace_all(x, "(DEADLINE:\\ <)|<|>", "") %>%
                         stringr::str_trim()
                 }) %>%
+                    as.Date(format = "%Y-%m-%d") %>%
+                    format("%Y-%m-%d") %>%
                     return()
     }

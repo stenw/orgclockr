@@ -3,6 +3,11 @@
 ##' Do not confuse the number of days on a task with the total time
 ##' spent on a task in days. The latter can be calculated from
 ##' \\code{extract_time_spent}.
+##'
+##' Org mode uses the standard ISO notation for dates and times as it
+##' is defined in ISO 8601. The format is set in
+##' \code{org-time-stamp-custom-formats}. If this variable is
+##' modified, the extraction is likely to fail.
 ##' @param x
 ##' @return the days on a task in an org file as a numeric vector.
 ##' @export extract_days_on_task
