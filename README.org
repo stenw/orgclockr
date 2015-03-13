@@ -6,7 +6,7 @@
 #+AUTHOR: Bernhard Pröll
 
 * Introduction to orgclockr
-** What's Org mode and why would I want to parse it?
+** What's Org Mode and why would I want to parse it?
 
 Corresponding to its description, the Emacs-mode [[http://orgmode.org/manual/index.html#Top][Org mode]] is an organizational tool that lives in the plain text world. Furthermore, it's a quite complex markup language. Complexity is not imposed though, jumping into it is adviced here. What sets Org mode apart other organizational tools is the seemingly flawless integration of a full-fledged task management solution into a flexible outliner.
 
@@ -14,17 +14,32 @@ Org mode offers multiple options to filter by org elements: Filtering in an org 
 
 There are [[http://orgmode.org/worg/org-tools/][various parsers]] for elements in org files, even one in R ([[http://cran.r-project.org/web/packages/orgR/index.html][orgR]]) is available on CRAN. I recommend using orgR for quickly extracting the raw headings and timestamps of an org file, but the results on todo keywords and tags were certainly not satisfactory. =orgclockr= strives to provide more flexible extraction functions to capture the elements in a heading as well as the clocking information related to it.
 
-** Clocking Work Time in Org mode
+** Clocking Work Time in Org Mode
 
-Keeping track of the time you spend not only on work but also on activities to which you dedicate yourself in your free time is something that the [[http://quantifiedself.com/][Quantified Self Movement]] brought to a whole new level. What I really like about it is the inspiring [[http://quantifiedself.com/data-visualization/][collection of visualizations]] that are derived from the continuous data collection by its members. Clocking work time is also of use in task and project management for getting a glimpse on what you spent your time on and how the time spent meets the according effort. While Org mode is a fantastic tool to do the actual clocking and to build simple clock tables, I struggled doing the weekly reviews properly. Most of the time I noticed where my priorities were and how much time I spent in total and proceeded with archiving completed tasks or something else. To actually improve my time management, I planned on focussing on my work efficiency rate, which compares the effort to the time spent, and visualizing results in time series to become aware of trends and changes.
+Keeping track of the time you spend not only on work but also on activities to which you dedicate yourself in your free time is something that the [[http://quantifiedself.com/][Quantified Self Movement]] brought to a whole new level. What I really like about it is the inspiring [[http://quantifiedself.com/data-visualization/][collection of visualizations]] that are derived from the continuous data collection by its members. Clocking work time is also of use in task and project management for getting a glimpse on what you spent your time on and how the time spent meets the according effort. For me, becoming aware of my weaknesses (spending way too much time on some tasks, totally avoiding others) offers the greatest opportunity to improve my work efficiency. While Org mode is a fantastic tool to do the actual clocking and to build simple clock tables, I struggled doing the weekly reviews properly. Most of the time I noticed where my priorities were and how much time I spent in total and proceeded with archiving completed tasks or something else. To actually improve my time management, I planned on focussing on my work efficiency rate, which compares the effort to the time spent, and visualizing results in time series to become aware of trends and changes.
 
-Org mode allows to clock the time spent on a task. The relevant information is stored in a drawer using timestamps in the format predetermined in =org-time-stamp-formats=. Furthermore, to fix a time limit, Org mode uses both an effort and a deadline property. These elements will be parsed by =orgclockr= and the time spent, the average length of a clock interval, the number of clock intervals on a given day, the period of time on a task and the effort set returned per task. These informations allow for a more detailed clock report than the built-in =org-clock-report= in Org mode. The availability of the clocking data in a =data_frame= object is of great benefit not only for filtering headings by elements, but also for calculating measures of work efficiency and visualizing the results with various plotting libraries in R. Some examples are provided in the next chapter.
+Org mode allows to clock the time spent on a task. The relevant information is stored in a drawer using timestamps in the format predetermined in =org-time-stamp-formats=. Furthermore, to fix a time limit, Org mode uses both an effort and a deadline property. These elements will be parsed by =orgclockr= and the time spent, the average length of a clock interval, the number of clock intervals on a given day, the period of time on a task and the effort set returned per task. These informations allow for a more detailed clock report than the built-in =org-clock-report= in Org mode. The availability of the clocking data in a =dplyr::data_frame= object is of great benefit not only for filtering headings by elements, but also for calculating measures of work efficiency. Examples are provided in the next chapter.
 
-Learning to set efforts properly can only be done by experience. Therefore making clocking a habit is indispensable. Setting the right efforts is especially useful when breaking down large projects into manageable parts. While Org mode comes in useful when pointing out that you are exceeding the set effort on the currently clocked task, I'd like to have a more general view on my efforts set for a whole project. A graphical representation of the summed effort of outstanding work and the number of tasks to be completed taking deadlines into account is provided by a [[http://en.wikipedia.org/wiki/Burn_down_chart][burn down chart]]. This is one visualization of tasks, efforts and deadlines I want to provide in =orgclockr=.
+Learning to set efforts properly can only be done from experience. Therefore making clocking a habit is indispensable. Setting the right efforts is especially useful when breaking down large projects into manageable parts. While Org mode comes in useful when pointing out that you are exceeding the effort set on the currently clocked task, I'd like to have a more general view on my efforts set for a whole project. Calculating the sum of the estimated time needed on the whole project or parts of it is more convenient in R than in Org Tables. Arguably the greatest benefit  of =orgclockr=, though, is in creating time series and visualizing the results with various plotting libraries in R.
 
-Another visualization I'd like to offer is a graphical representation of the time spent per task per day, allowing for a quick overview on main tasks per day.
+* Exploring an Org File
+** Data: orgfile
+The =orgclockr= package comes with the built-in dataset =orgfile=. This dataset in the form of a character vector illustrates the typical org file. For presentational purposes the file consists of only 100 lines but is enriched with various org elements. The object is the result from reading in an org file. Typically this is done with a combination of =file()= and =readLines()= in R:
 
-** Extracting the org elements
+#+BEGIN_SRC r :results output :colnames yes :eval no
+file("/path/to/file.org") %>%
+    readLines()
+#+END_SRC
+
+This package provides the raw data of =orgfile=, the =sample.org= file the object stems from, as well. Reading =sample.org= is simply done using =system.file()=:
+
+#+BEGIN_SRC r :results output :colnames yes :eval no
+system.file("extdata", "sample.org", package = "orgclockr") %>%
+    readLines()
+#+END_SRC
+
+** Extracting the Org Elements
+=orgclockr= provides several extraction functions if you are only interested in a specific element of an org file. These start with =extract_=. Most commonly you'd want to extract several elements and store them in a =dplyr::data_frame= for further manipulation, which is done using =org_elements_df()=. The code given below filters the headings of the built-in dataset =orgfile= that are *not* tagged with =TagThree=. If you are not familiar with the manipulation functions of the =dplyr= library yet, you may start with the [[http://www.rstudio.com/resources/cheatsheets/][Data Wrangling Cheat Sheet]] provided by RStudio.
 
 #+BEGIN_SRC r :results value :colnames yes
 f <- org_elements_df(orgfile)
@@ -41,7 +56,8 @@ filter(f, !grepl("TagThree", Tag))
 | TaskTwo    | nil         | TagOne        |     2 | TODO  | nil      | 20     |
 | TaskThree  | nil         | TagOne        |     2 | TODO  | nil      | nil    |
 
-** Extracting clocking information
+** Extracting Clocking Information
+While =org_elements_df()= extracts various elements from org headings, I decided to separate the clocking information from it. This is therefore returned from =org_clock_df()=, which will also result in a =dplyr::data_frame= object. As will be shown below, the local data frames returned from both function can easily be joined using =Headline= as the index column. The following code returns the number of days a task has been clocked into. Do not confuse this with the sum of =TimeSpent= in days:
 
 #+BEGIN_SRC r :results value
 org_clock_df(orgfile) %>%
@@ -61,6 +77,30 @@ org_clock_df(orgfile) %>%
 | TaskTen   |          1 |
 | TaskTwo   |          2 |
 
+The table below sorts the tasks and days by the amount of time invested:
+
+#+BEGIN_SRC r :results value
+org_clock_df(orgfile) %>%
+    filter(between(Date, Sys.Date() - 60, Sys.Date())) %>%
+    group_by(Date, Headline) %>%
+    summarise(TimeSpent) %>%
+    ungroup() %>%
+    arrange(desc(TimeSpent))
+#+END_SRC
+
+#+CAPTION: Filtering the last 60 days and sort by time spent
+#+RESULTS:
+|       Date | Headline  | TimeSpent |
+|------------+-----------+-----------|
+| 2015-01-19 | TaskTen   |       334 |
+| 2015-01-20 | TaskEight |       129 |
+| 2015-02-28 | TaskFive  |        51 |
+| 2015-02-05 | TaskEight |        23 |
+| 2015-03-01 | TaskFive  |         6 |
+| 2015-01-19 | TaskNine  |         2 |
+
+The =AvgClockInterval= returns the mean or median interval for the task per day. You may be interested how the average time on a task has been over time:
+
 #+BEGIN_SRC r :results value :colnames yes
 org_clock_df(orgfile) %>%
     group_by(Headline) %>%
@@ -79,6 +119,8 @@ org_clock_df(orgfile) %>%
 | TaskTwo   |          10.5 |
 | TaskFive  |           9.5 |
 | TaskNine  |             2 |
+
+After doing simple calculations on the clocking data you may want to visualize your time spent as a time series. The =autoplot()= takes a =zoo= object, which is particularly aimed at irregular time series:
 
 #+BEGIN_SRC r :results graphics :file "/home/bernhard/R-programming/images/a.png"
 library(zoo)
@@ -102,6 +144,8 @@ org_clock_df(orgfile) %>%
 #+RESULTS:
 [[file:/home/bernhard/R-programming/images/a.png]]
 
+The plot below shows a very simple retrospective Gantt chart diagram, that takes the first and the last day clocked into a task as values:
+
 #+BEGIN_SRC r :results graphics :file "/home/bernhard/R-programming/images/b.png"
 org_clock_df(orgfile) %>%
     select(Date, Headline) %>%
@@ -124,25 +168,7 @@ org_clock_df(orgfile) %>%
 #+RESULTS:
 [[file:/home/bernhard/R-programming/images/b.png]]
 
-#+BEGIN_SRC r :results value
-org_clock_df(orgfile) %>%
-    filter(between(Date, Sys.Date() - 60, Sys.Date())) %>%
-    group_by(Date, Headline) %>%
-    summarise(TimeSpent) %>%
-    ungroup() %>%
-    arrange(desc(TimeSpent))
-#+END_SRC
-
-#+CAPTION: Filtering the last 60 days and sort by time spent
-#+RESULTS:
-|       Date | Headline  | TimeSpent |
-|------------+-----------+-----------|
-| 2015-01-19 | TaskTen   |       334 |
-| 2015-01-20 | TaskEight |       129 |
-| 2015-02-28 | TaskFive  |        51 |
-| 2015-02-05 | TaskEight |        23 |
-| 2015-03-01 | TaskFive  |         6 |
-| 2015-01-19 | TaskNine  |         2 |
+This plot is pretty much self-explanatory:
 
 #+BEGIN_SRC r :results graphics :file "/home/bernhard/R-programming/images/c.png"
 Palette <- c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2",
@@ -163,7 +189,7 @@ org_clock_df(orgfile) %>%
 #+RESULTS:
 [[file:/home/bernhard/R-programming/images/c.png]]
 
-Joining the =org_clock_df= and the =org_elements_df=
+Joining the results of =org_clock_df()= and =org_elements_df()= is achieved with the various dedicated functions provided by the =dplyr= library. The following example uses a =left_join()=, because we want omit the information on headings without any clocking information:
 
 #+BEGIN_SRC r :results value
 a_df <- org_clock_df(orgfile)
@@ -185,6 +211,8 @@ left_join(a_df, b_df) %>%
 | 2015-01-20 | TaskEight |            129 |     25 |     104 |
 | 2015-01-05 | TaskSeven |            122 |     30 |      92 |
 | 2014-12-21 | TaskSix   |             90 |     60 |      30 |
+
+The plot below is what I had in mind before writing =orgclockr=:
 
 #+BEGIN_SRC r :results graphics :file "/home/bernhard/R-programming/images/d.png"
 library(tidyr)
@@ -237,7 +265,18 @@ left_join(a_df, b_df) %>%
 | TaskTen   |       334 |     25 |           0.07 |
 | TaskTwo   |        21 |     20 |           0.95 |
 
-*** Further Reading
+** To be Done									:noexport:
+A graphical representation of the summed effort of outstanding work and the number of tasks to be completed taking deadlines into account is provided by a [[http://en.wikipedia.org/wiki/Burn_down_chart][burn down chart]].
+
+Another visualization I'd like to offer is a graphical representation of the time spent per task per day, allowing for a quick overview on main tasks per day.
+
+* Limitations
+This section may and hopefully will undergo changes in the future, so the list below is also a development roadmap:
+
+- Currently the tag inheritance provided by the =inherit_tags= parameter in =org_elements_df()= and the =inherit= parameter in =extract_tags()= only works for level one tags.
+- For simplicity reasons, clock intervals are not split at midnight. Keep this in mind when clocking for long periods of time spanning from one day to the next. This may impair the meaningfulness of the =TimeSpent= in =org_clock_df()=.
+- Currently =orgclockr= doesn't parse the =ARCHIVE_ITAGS= and =ARCHIVE_CATEGORY= in archived org files.
+* Further Reading
 - http://sachachua.com/blog/2007/12/clocking-time-with-emacs-org/
 - http://doc.norang.ca/org-mode.html#Clocking
 - http://orgmode.org/manual/Clocking-work-time.html#Clocking-work-time
