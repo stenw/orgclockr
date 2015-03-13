@@ -24,6 +24,8 @@
 ##' @param x org object as character vector.
 ##' @param units unit of time used in the columns 'TimeSpent',
 ##' 'AvgClockInterval' and 'Period'.
+##' @param avg_fun the function to calculate the values in
+##' 'AvgClockInterval'. Should be either \code{mean} or \code{median}.
 ##' @return a \code{dplyr::data_frame} object.
 ##' @export org_clock_df
 ##' @examples
@@ -38,8 +40,8 @@
 ##' ## 2 TaskEight 2015-02-05        23            11.50          2  23085
 ##' ## 3  TaskFive 2015-02-28        51            12.75          4   1291
 ##' ## 4  TaskFive 2015-03-01         6             3.00          2   1291
-  org_clock_df <-
-    function(x, units = "mins") {
+org_clock_df <-
+    function(x, units = "mins", avg_fun = "mean") {
         intervals       <- extract_intervals(x, units = units)
         timestamps      <- extract_timestamps(x)
         timestamps_date <- timestamps %>%
@@ -87,8 +89,9 @@
             ) %>%
                 dplyr::group_by(Headline, Date) %>%
                 dplyr::summarise(TimeSpent        = sum(Time),
-                                 AvgClockInterval = mean(Time) %>%
-                                    round(2),
+                                 AvgClockInterval = do.call(avg_fun,
+                                     list(Time)) %>%
+                                         round(2),
                                  NIntervals = n(),
                                  Period           = unique(Period)) %>%
                                      na.omit() %>%

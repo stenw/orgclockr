@@ -11,8 +11,7 @@ period per headline.', {
                  1)
     expect_equal(resulting_df %>% sapply(typeof) %>% as.character(),
                  c("character", "character", "character", "integer", "character",
-                   "character", "double", "double", "character", "character",
-                   "double", "integer", "double"))
-    expect_equal(resulting_df %>% length(), 13)
+                   "character", "double"))
+    expect_equal(resulting_df %>% length(), 7)
     expect_equal(resulting_df %>% nrow(), 12)
 })

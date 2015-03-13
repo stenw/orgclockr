@@ -7,7 +7,7 @@
 ##' is defined in ISO 8601. The format is set in
 ##' \code{org-time-stamp-custom-formats}. If this variable is
 ##' modified, the extraction is likely to fail.
-@param x org object as character vector.
+##' @param x org object as character vector.
 ##' @param units unit of time used.
 ##' @return a list of double values in the unit of time given.
 ##' @export extract_intervals

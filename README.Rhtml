@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>orgclockr</title>
-<!-- 2015-03-12 Do 21:43 -->
+<!-- 2015-03-13 Fr 00:01 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="Bernhard Pröll" />
@@ -156,7 +156,7 @@ Org mode offers multiple options to filter by org elements: Filtering in an org 
 </p>
 
 <p>
-There are <a href="http://orgmode.org/worg/org-tools/">various parsers</a> for elements in org files, even one in R (<a href="http://cran.r-project.org/web/packages/orgR/index.html">orgR</a>) is available on CRAN. I recommend using orgR for quickly extracting the raw headings and timestamps of an org file, but the results on todo keywords and tags were certainly not satisfactory. <code>orgclockr</code> strives to provide more flexible extraction functions for the elements of org headings.
+There are <a href="http://orgmode.org/worg/org-tools/">various parsers</a> for elements in org files, even one in R (<a href="http://cran.r-project.org/web/packages/orgR/index.html">orgR</a>) is available on CRAN. I recommend using orgR for quickly extracting the raw headings and timestamps of an org file, but the results on todo keywords and tags were certainly not satisfactory. <code>orgclockr</code> strives to provide more flexible extraction functions to capture the elements in a heading as well as the clocking information related to it.
 </p>
 </div>
 </div>
@@ -165,7 +165,11 @@ There are <a href="http://orgmode.org/worg/org-tools/">various parsers</a> for e
 <h3 id="sec-1-2"><span class="section-number-3">1.2</span> Clocking Work Time in Org mode</h3>
 <div class="outline-text-3" id="text-1-2">
 <p>
-Org mode allows to clock the time spent on a task. The relevant information is stored in timestamps in a drawer. Furthermore, to fix a time limit, Org mode uses an effort property. These elements will be parsed by <code>orgclockr</code> and the time spent, the average length of a clock interval, the period of time on a task and the effort set returned per task. These informations allow for a more detailed clock report than the built-in <code>org-clock-report</code> in Org mode.
+Keeping track of the time you spend not only on work but also on activities to which you dedicate yourself in your free time is something that the <a href="http://quantifiedself.com/">Quantified Self Movement</a> brought to a whole new level. What I really like about it is the inspiring <a href="http://quantifiedself.com/data-visualization/">collection of visualizations</a> that are derived from the continuous data collection by its members. Clocking work time is also of use in task and project management for getting a glimpse on what you spent your time on and how the time spent meets the according effort. While Org mode is a fantastic tool to do the actual clocking and to build simple clock tables, I struggled doing the weekly reviews properly. Most of the time I noticed where my priorities were and how much time I spent in total and proceeded with archiving completed tasks or something else. To actually improve my time management, I planned on focussing on my work efficiency rate, which compares the effort to the time spent, and visualizing results in time series to become aware of trends and changes.
+</p>
+
+<p>
+Org mode allows to clock the time spent on a task. The relevant information is stored in a drawer using timestamps in the format predetermined in <code>org-time-stamp-formats</code>. Furthermore, to fix a time limit, Org mode uses both an effort and a deadline property. These elements will be parsed by <code>orgclockr</code> and the time spent, the average length of a clock interval, the number of clock intervals on a given day, the period of time on a task and the effort set returned per task. These informations allow for a more detailed clock report than the built-in <code>org-clock-report</code> in Org mode. The availability of the clocking data in a <code>data_frame</code> object is of great benefit not only for filtering headings by elements, but also for calculating measures of work efficiency and visualizing the results with various plotting libraries in R. Some examples are provided in the next chapter.
 </p>
 
 <p>
@@ -179,8 +183,92 @@ Another visualization I'd like to offer is a graphical representation of the tim
 </div>
 
 <div id="outline-container-sec-1-3" class="outline-3">
-<h3 id="sec-1-3"><span class="section-number-3">1.3</span> Examples</h3>
+<h3 id="sec-1-3"><span class="section-number-3">1.3</span> Extracting the org elements</h3>
 <div class="outline-text-3" id="text-1-3">
+<div class="org-src-container">
+
+<pre class="src src-r">f &lt;- org_elements_df(orgfile)
+filter(f, !grepl("TagThree", Tag))
+</pre>
+</div>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="all" frame="border" align="center">
+<caption class="t-above"><span class="table-number">Table 1:</span> Filtering tasks that are not tagged with <code>TagThree</code></caption>
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="right" />
+
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">Headline</th>
+<th scope="col" class="left">Category</th>
+<th scope="col" class="left">Tag</th>
+<th scope="col" class="right">Level</th>
+<th scope="col" class="left">State</th>
+<th scope="col" class="left">Deadline</th>
+<th scope="col" class="left">Effort</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">HeadingOne</td>
+<td class="left">CategoryOne</td>
+<td class="left">TagOne</td>
+<td class="right">1</td>
+<td class="left">nil</td>
+<td class="left">nil</td>
+<td class="left">nil</td>
+</tr>
+
+<tr>
+<td class="left">TaskOne</td>
+<td class="left">nil</td>
+<td class="left">TagOne TagTwo</td>
+<td class="right">2</td>
+<td class="left">TODO</td>
+<td class="left">nil</td>
+<td class="left">nil</td>
+</tr>
+
+<tr>
+<td class="left">TaskTwo</td>
+<td class="left">nil</td>
+<td class="left">TagOne</td>
+<td class="right">2</td>
+<td class="left">TODO</td>
+<td class="left">nil</td>
+<td class="left">20</td>
+</tr>
+
+<tr>
+<td class="left">TaskThree</td>
+<td class="left">nil</td>
+<td class="left">TagOne</td>
+<td class="right">2</td>
+<td class="left">TODO</td>
+<td class="left">nil</td>
+<td class="left">nil</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-sec-1-4" class="outline-3">
+<h3 id="sec-1-4"><span class="section-number-3">1.4</span> Extracting clocking information</h3>
+<div class="outline-text-3" id="text-1-4">
 <div class="org-src-container">
 
 <pre class="src src-r">org_clock_df(orgfile) %&gt;%
@@ -189,8 +277,8 @@ Another visualization I'd like to offer is a graphical representation of the tim
 </pre>
 </div>
 
-<table border="2" cellspacing="0" cellpadding="6" rules="all" frame="border" align="center">
-<caption class="t-above"><span class="table-number">Table 1:</span> Days on task</caption>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 2:</span> Days on task</caption>
 
 <colgroup>
 <col  class="left" />
@@ -250,8 +338,8 @@ Another visualization I'd like to offer is a graphical representation of the tim
 </pre>
 </div>
 
-<table border="2" cellspacing="0" cellpadding="6" rules="all" frame="border" align="center">
-<caption class="t-above"><span class="table-number">Table 2:</span> The average clock interval per task</caption>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 3:</span> The average clock interval per task</caption>
 
 <colgroup>
 <col  class="left" />
@@ -367,8 +455,8 @@ org_clock_df(orgfile) %&gt;%
 </pre>
 </div>
 
-<table border="2" cellspacing="0" cellpadding="6" rules="all" frame="border" align="center">
-<caption class="t-above"><span class="table-number">Table 3:</span> Filtering the last 60 days and sort by time spent</caption>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 4:</span> Filtering the last 60 days and sort by time spent</caption>
 
 <colgroup>
 <col  class="right" />
@@ -465,8 +553,8 @@ left_join(a_df, b_df) %&gt;%
 </pre>
 </div>
 
-<table border="2" cellspacing="0" cellpadding="6" rules="all" frame="border" align="center">
-<caption class="t-above"><span class="table-number">Table 4:</span> Sorting tasks by the amount of time they are overdue</caption>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 5:</span> Sorting tasks by the amount of time they are overdue</caption>
 
 <colgroup>
 <col  class="right" />
@@ -557,7 +645,7 @@ left_join(a_df, b_df) %&gt;%
 </div>
 
 <p>
-We got a striking example of mostly under estimates and one over estimate. This obviously should be avoided. The preceeding plot clearly suggests horrible work efficiency rates for the tasks depicted with the sole exception of <code>TaskTwo</code> near the desired value of one:
+We got a striking example of mostly under estimates and one over estimate here. This obviously should be avoided. The preceeding plot clearly suggests horrible work efficiency rates for the tasks depicted with the sole exception of <code>TaskTwo</code> near the desired value of one:
 </p>
 
 <div class="org-src-container">
@@ -573,7 +661,7 @@ We got a striking example of mostly under estimates and one over estimate. This 
 </div>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
+<caption class="t-above"><span class="table-number">Table 6:</span> Calculating the work efficiency rate</caption>
 
 <colgroup>
 <col  class="left" />
@@ -637,12 +725,26 @@ We got a striking example of mostly under estimates and one over estimate. This 
 </tbody>
 </table>
 </div>
+
+<div id="outline-container-sec-1-4-1" class="outline-4">
+<h4 id="sec-1-4-1"><span class="section-number-4">1.4.1</span> Further Reading</h4>
+<div class="outline-text-4" id="text-1-4-1">
+<ul class="org-ul">
+<li><a href="http://sachachua.com/blog/2007/12/clocking-time-with-emacs-org/">http://sachachua.com/blog/2007/12/clocking-time-with-emacs-org/</a>
+</li>
+<li><a href="http://doc.norang.ca/org-mode.html#Clocking">http://doc.norang.ca/org-mode.html#Clocking</a>
+</li>
+<li><a href="http://orgmode.org/manual/Clocking-work-time.html#Clocking-work-time">http://orgmode.org/manual/Clocking-work-time.html#Clocking-work-time</a>
+</li>
+</ul>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Bernhard Pröll</p>
-<p class="date">Created: 2015-03-12 Do 21:43</p>
+<p class="date">Created: 2015-03-13 Fr 00:01</p>
 <p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.10)</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>

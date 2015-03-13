@@ -22,7 +22,7 @@
 ##' is defined in ISO 8601. The format is set in
 ##' \code{org-time-stamp-custom-formats}. If this variable is
 ##' modified, the extraction of 'Deadline' is likely to fail.
-@param x org object as character vector.
+##' @param x org object as character vector.
 ##' @param units unit of time used in the column Effort
 ##' @param inherit_tags logical; if \code{TRUE} (default), inherit
 ##' tags from level one headlines.
