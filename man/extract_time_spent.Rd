@@ -20,17 +20,16 @@ timestamps and returns the sum of differences per headline. This
 expects an even number of timestamps per headline, so in org files
 with running clocks the lonely timestamp will be ignored.
 }
+\details{
+Org mode uses the standard ISO notation for dates and times as it
+is defined in ISO 8601. The format is set in
+\code{org-time-stamp-custom-formats}. If this variable is
+modified, the extraction is likely to fail.
+}
 \examples{
 system.file("extdata", "sample.org", package = "orgclockr") \%>\%
 readLines() \%>\%
 extract_time_spent()
 ##  [1]   0   0  21   0   0   2 232   0 122 152   2 334
-}
-\seealso{
-\code{extract_intervals}, \code{extract_days_on_task},
-\code{extract_levels}, \code{extract_efforts},
-\code{extract_todostates}, \code{extract_headlines},
-\code{extract_timestamps}, \code{extract_tags} and
-\code{extract_categories} to extract other org elements.
 }
 

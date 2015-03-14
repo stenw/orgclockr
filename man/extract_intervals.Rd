@@ -17,18 +17,17 @@ a list of double values in the unit of time given.
 This expects an even number of timestamps per headline, so in org
 files with running clocks the lonely timestamp will be ignored.
 }
+\details{
+Org mode uses the standard ISO notation for dates and times as it
+is defined in ISO 8601. The format is set in
+\code{org-time-stamp-custom-formats}. If this variable is
+modified, the extraction is likely to fail.
+}
 \examples{
 system.file("extdata", "sample.org", package = "orgclockr") \%>\%
 readLines() \%>\%
 extract_intervals() \%>\%
 last()
 ## [1]  68  17   1  62  16 170
-}
-\seealso{
-\code{extract_time_spent}, \code{extract_days_on_task},
-\code{extract_levels}, \code{extract_efforts},
-\code{extract_todostates}, \code{extract_headlines},
-\code{extract_timestamps}, \code{extract_tags} and
-\code{extract_categories} to extract other org elements.
 }
 

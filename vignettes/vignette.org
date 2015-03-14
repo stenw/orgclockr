@@ -1,9 +1,50 @@
 #+PROPERTY: header-args:r :session :width 800 :exports both :colnames yes
 #+OPTIONS: toc:nil
-#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../css/orgish.css" />
-#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../css/table.css/" />
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="./vignettes/orgish.css/" />
 #+TITLE: orgclockr
 #+AUTHOR: Bernhard Pröll
+
+#+BEGIN_HTML
+<!--
+%\VignetteEngine{knitr::knitr}
+%\VignetteIndexEntry{orgclockr}
+%\VignettePackage{orgclockr}
+-->
+#+END_HTML
+
+#+BEGIN_SRC r :exports code :ravel results='hide', echo=FALSE, message=FALSE, warning=FALSE
+library(knitr)
+
+style_sheet = "./vignettes/orgish.css"
+style = if(file.exists(style_sheet)) {
+    paste(readLines(style_sheet), collapse = "\n")
+}
+
+opts_knit$set(self.contained = TRUE,
+              upload.fun = image_uri,
+              header = c(highlight = style))
+
+opts_chunk$set(comment = "  ",
+               fig.path = "",
+               fig.align = "center",
+               out.width = "50%",
+               dpi = 300,
+               indent = 10,
+               cache = FALSE,
+               cache.path = "../cache")
+
+knit_hooks$set(fig.cap = function(before, options, envir) {
+    if(!before) {
+        paste('<p class="caption">',options$fig.cap,"</p>",sep="")
+    }
+})
+#+END_SRC
+
+#+RESULTS:
+
+#+BEGIN_HTML
+<p class="author-top">version 0.1</p>
+#+END_HTML
 
 * Introduction to orgclockr
 ** What's Org Mode and why would I want to parse it?
@@ -26,14 +67,16 @@ Learning to set efforts properly can only be done from experience. Therefore mak
 ** Data: orgfile
 The =orgclockr= package comes with the built-in dataset =orgfile=. This dataset in the form of a character vector illustrates the typical org file. For presentational purposes the file consists of only 100 lines but is enriched with various org elements. The object is the result from reading in an org file. Typically this is done with a combination of =file()= and =readLines()= in R:
 
-#+BEGIN_SRC r :results output :colnames yes :eval no
+#+BEGIN_SRC r :results none :colnames yes :eval no
 file("/path/to/file.org") %>%
     readLines()
 #+END_SRC
 
 This package provides the raw data of =orgfile=, the =sample.org= file the object stems from, as well. Reading =sample.org= is simply done using =system.file()=:
 
-#+BEGIN_SRC r :results output :colnames yes :eval no
+#+BEGIN_SRC r :results none :colnames yes :eval no
+library(orgclockr)
+
 system.file("extdata", "sample.org", package = "orgclockr") %>%
     readLines()
 #+END_SRC
@@ -46,7 +89,7 @@ f <- org_elements_df(orgfile)
 filter(f, !grepl("TagThree", Tag))
 #+END_SRC
 
-#+ATTR_HTML: :border 2 :rules all :frame border :align center
+# #+ATTR_HTML: :border 2 :rules all :frame border :align center
 #+CAPTION: Filtering tasks that are not tagged with =TagThree=
 #+RESULTS:
 | Headline   | Category    | Tag           | Level | State | Deadline | Effort |

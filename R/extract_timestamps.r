@@ -19,11 +19,6 @@
 ##' ##  [4] "2015-01-19 Mo 22:12" "2015-01-19 Mo 21:43" "2015-01-19 Mo 21:44"
 ##' ##  [7] "2015-01-19 Mo 20:40" "2015-01-19 Mo 21:42" "2015-01-19 Mo 19:25"
 ##' ## [10] "2015-01-19 Mo 19:41" "2015-01-19 Mo 16:11" "2015-01-19 Mo 19:01"
-##' @seealso \code{extract_intervals}, \code{extract_days_on_task},
-##' \code{extract_time_spent}, \code{extract_efforts},
-##' \code{extract_todostates}, \code{extract_headlines},
-##' \code{extract_tags}, \code{extract_levels} and
-##' \code{extract_categories} to extract other org elements.
 extract_timestamps <-
     function(x) {
         split_file <- split_orgfile(x)

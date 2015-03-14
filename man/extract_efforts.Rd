@@ -31,11 +31,4 @@ readLines() \%>\%
 extract_efforts()
 ##  [1]  NA  NA  20  NA  NA  NA  60  NA  30  25 240  25
 }
-\seealso{
-\code{extract_intervals}, \code{extract_days_on_task},
-\code{extract_time_spent}, \code{extract_categories},
-\code{extract_todostates}, \code{extract_headlines},
-\code{extract_timestamps}, \code{extract_tags} and
-\code{extract_levels} to extract other org elements.
-}
 

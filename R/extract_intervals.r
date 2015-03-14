@@ -17,11 +17,6 @@
 ##' extract_intervals() %>%
 ##' last()
 ##' ## [1]  68  17   1  62  16 170
-##' @seealso \code{extract_time_spent}, \code{extract_days_on_task},
-##' \code{extract_levels}, \code{extract_efforts},
-##' \code{extract_todostates}, \code{extract_headlines},
-##' \code{extract_timestamps}, \code{extract_tags} and
-##' \code{extract_categories} to extract other org elements.
 extract_intervals <-
     function(x, units = "mins") {
         x %>%

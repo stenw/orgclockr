@@ -43,12 +43,13 @@
 ##' ## 1 HeadingOne CategoryOne        TagOne     1    NA       NA     NA
 ##' ## 2    TaskOne          NA TagOne TagTwo     2  TODO       NA     NA
 ##' ## 3    TaskTwo          NA        TagOne     2  TODO       NA   0.33
-##' @seealso \code{extract_intervals}, \code{extract_days_on_task},
+##' @seealso \code{extract_intervals}, \code{extract_deadlines},
 ##' \code{extract_time_spent}, \code{extract_categories},
 ##' \code{extract_todostates}, \code{extract_headlines},
 ##' \code{extract_timestamps}, \code{extract_tags},
 ##' \code{extract_efforts} and \code{extract_levels} to extract
-##' particular org elements.
+##' particular org elements. Use \code{org_clock_df} to extract
+##' various clocking information.
 org_elements_df <-
     function(x,
              units           = "mins",

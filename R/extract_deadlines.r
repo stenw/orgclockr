@@ -21,11 +21,6 @@
 ##' ##  [1] NA           NA           NA           NA           NA
 ##' ##  [6] "2014-01-04" NA           NA           NA           NA
 ##' ## [11] NA           NA
-##' @seealso \code{extract_intervals}, \code{extract_days_on_task},
-##' \code{extract_time_spent}, \code{extract_categories},
-##' \code{extract_todostates}, \code{extract_headlines},
-##' \code{extract_timestamps}, \code{extract_tags} and
-##' \code{extract_levels} to extract other org elements.
 extract_deadlines <-
     function(x, pattern = "^\\ {0,}DEADLINE:\\ +<[[:digit:]].*>$") {
         split_file <- split_orgfile(x)

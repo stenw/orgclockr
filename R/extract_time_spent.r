@@ -18,12 +18,7 @@
 ##' system.file("extdata", "sample.org", package = "orgclockr") %>%
 ##' readLines() %>%
 ##' extract_time_spent()
-##' ##  [1]   0   0  21   0   0   2 232   0 122 152   2 334
-##' @seealso \code{extract_intervals}, \code{extract_days_on_task},
-##' \code{extract_levels}, \code{extract_efforts},
-##' \code{extract_todostates}, \code{extract_headlines},
-##' \code{extract_timestamps}, \code{extract_tags} and
-##' \code{extract_categories} to extract other org elements.
+##' ##  [1]  NA  NA  21  NA  NA  57 232  NA 122 152   2 334
 extract_time_spent <-
     function(x, units = "mins") {
         intervals <- extract_intervals(x, units = units)

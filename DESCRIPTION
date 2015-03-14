@@ -1,5 +1,5 @@
 Package: orgclockr
-Title: Extract the elements from an Org-mode file.
+Title: Extract the elements of an Org mode file.
 Version: 0.1
 Authors@R: 'Bernhard Proell <bmutbuerger@gmail.com> [aut, cre]'
 Description: A tool to extract the elements of an Org mode file.

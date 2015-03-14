@@ -40,6 +40,13 @@
 ##' ## 2 TaskEight 2015-02-05        23            11.50          2  23085
 ##' ## 3  TaskFive 2015-02-28        51            12.75          4   1291
 ##' ## 4  TaskFive 2015-03-01         6             3.00          2   1291
+##' @seealso \code{extract_intervals}, \code{extract_deadlines},
+##' \code{extract_time_spent}, \code{extract_categories},
+##' \code{extract_todostates}, \code{extract_headlines},
+##' \code{extract_timestamps}, \code{extract_tags},
+##' \code{extract_efforts} and \code{extract_levels} to extract
+##' particular org elements. Use \code{org_elements_df} to extract
+##' various org elements.
 org_clock_df <-
     function(x, units = "mins", avg_fun = "mean") {
         intervals       <- extract_intervals(x, units = units)
