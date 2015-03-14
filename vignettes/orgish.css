@@ -23,6 +23,14 @@ body {
     z-index: 99;
 }
 
+.caption {
+    font-style: italic;
+    text-align: center;
+    margin-top: 2px;
+    margin-bottom: 25px;
+    font-size: 11pt;
+}
+
 #orgquote {
     position: fixed;
     display: block;
@@ -87,6 +95,14 @@ h1.title {
     padding-top: 23px;
     padding-left: 70pt;
     font-size: 27pt;
+    font-family: Courier New;
+}
+
+.version-number {
+    text-shadow: 2px 2px 4px #999;
+    padding-top: 25px;
+    padding-left: 70pt;
+    font-size: 12pt;
     font-family: Courier New;
 }
 
