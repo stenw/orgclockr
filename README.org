@@ -1,10 +1,13 @@
 #+PROPERTY: header-args:r :session :width 800 :exports both :colnames yes
 #+OPTIONS: toc:nil
-#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../css/orgish.css" />
-#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../css/table.css/" />
 #+TITLE: orgclockr
 #+AUTHOR: Bernhard Pröll
 
+* Installation
+#+BEGIN_SRC r :results output :colnames yes
+library(devtools)
+devtools::install_github("mutbuerger/orgclockr")
+#+END_SRC
 * Introduction to orgclockr
 ** What's Org Mode and why would I want to parse it?
 
@@ -26,14 +29,16 @@ Learning to set efforts properly can only be done from experience. Therefore mak
 ** Data: orgfile
 The =orgclockr= package comes with the built-in dataset =orgfile=. This dataset in the form of a character vector illustrates the typical org file. For presentational purposes the file consists of only 100 lines but is enriched with various org elements. The object is the result from reading in an org file. Typically this is done with a combination of =file()= and =readLines()= in R:
 
-#+BEGIN_SRC r :results output :colnames yes :eval no
+#+BEGIN_SRC R :results none :colnames yes :eval no :ravel eval=FALSE
 file("/path/to/file.org") %>%
     readLines()
 #+END_SRC
 
 This package provides the raw data of =orgfile=, the =sample.org= file the object stems from, as well. Reading =sample.org= is simply done using =system.file()=:
 
-#+BEGIN_SRC r :results output :colnames yes :eval no
+#+BEGIN_SRC R :results none :colnames yes :eval no :ravel eval=FALSE
+library(orgclockr)
+
 system.file("extdata", "sample.org", package = "orgclockr") %>%
     readLines()
 #+END_SRC
@@ -41,7 +46,9 @@ system.file("extdata", "sample.org", package = "orgclockr") %>%
 ** Extracting the Org Elements
 =orgclockr= provides several extraction functions if you are only interested in a specific element of an org file. These start with =extract_=. Most commonly you'd want to extract several elements and store them in a =dplyr::data_frame= for further manipulation, which is done using =org_elements_df()=. The code given below filters the headings of the built-in dataset =orgfile= that are *not* tagged with =TagThree=. If you are not familiar with the manipulation functions of the =dplyr= library yet, you may start with the [[http://www.rstudio.com/resources/cheatsheets/][Data Wrangling Cheat Sheet]] provided by RStudio.
 
-#+BEGIN_SRC r :results value :colnames yes
+#+BEGIN_SRC R :results value :colnames yes :ravel message=FALSE, warning=FALSE
+library(orgclockr)
+
 f <- org_elements_df(orgfile)
 filter(f, !grepl("TagThree", Tag))
 #+END_SRC
@@ -59,7 +66,7 @@ filter(f, !grepl("TagThree", Tag))
 ** Extracting Clocking Information
 While =org_elements_df()= extracts various elements from org headings, I decided to separate the clocking information from it. This is therefore returned from =org_clock_df()=, which will also result in a =dplyr::data_frame= object. As will be shown below, the local data frames returned from both function can easily be joined using =Headline= as the index column. The following code returns the number of days a task has been clocked into. Do not confuse this with the sum of =TimeSpent= in days:
 
-#+BEGIN_SRC r :results value
+#+BEGIN_SRC R :results value
 org_clock_df(orgfile) %>%
     group_by(Headline) %>%
     summarise(DaysOnTask = n())
@@ -77,9 +84,9 @@ org_clock_df(orgfile) %>%
 | TaskTen   |          1 |
 | TaskTwo   |          2 |
 
-The table below sorts the tasks and days by the amount of time invested:
+The local data frame below sorts the tasks and days by the amount of time invested:
 
-#+BEGIN_SRC r :results value
+#+BEGIN_SRC R :results value
 org_clock_df(orgfile) %>%
     filter(between(Date, Sys.Date() - 60, Sys.Date())) %>%
     group_by(Date, Headline) %>%
@@ -101,7 +108,7 @@ org_clock_df(orgfile) %>%
 
 The =AvgClockInterval= returns the mean or median interval for the task per day. You may be interested how the average time on a task has been over time:
 
-#+BEGIN_SRC r :results value :colnames yes
+#+BEGIN_SRC R :results value :colnames yes
 org_clock_df(orgfile) %>%
     group_by(Headline) %>%
     summarise(AvgTimeOnTask = round(sum(TimeSpent)/sum(NIntervals), 2)) %>%
@@ -122,7 +129,7 @@ org_clock_df(orgfile) %>%
 
 After doing simple calculations on the clocking data you may want to visualize your time spent as a time series. The =autoplot()= takes a =zoo= object, which is particularly aimed at irregular time series:
 
-#+BEGIN_SRC r :results graphics :file "a.png"
+#+BEGIN_SRC R :results graphics :file "~/R-programming/images/a.png" :ravel message=FALSE, warning=FALSE, fig.width=7, fig.height=5, fig.cap='The time spent per day for the last 3 months'
 library(zoo)
 
 org_clock_df(orgfile) %>%
@@ -146,7 +153,7 @@ org_clock_df(orgfile) %>%
 
 The plot below shows a very simple retrospective Gantt chart diagram, that takes the first and the last day clocked into a task as values:
 
-#+BEGIN_SRC r :results graphics :file "b.png"
+#+BEGIN_SRC R :results graphics :file "~/R-programming/images/b.png" :ravel message=FALSE, warning=FALSE, fig.cap='A very simple retrospective Gantt chart diagram'
 org_clock_df(orgfile) %>%
     select(Date, Headline) %>%
     filter(between(Date, Sys.Date() - 90, Sys.Date())) %>%
@@ -170,7 +177,7 @@ org_clock_df(orgfile) %>%
 
 This plot is pretty much self-explanatory:
 
-#+BEGIN_SRC r :results graphics :file "c.png"
+#+BEGIN_SRC R :results graphics :file "~/R-programming/images/c.png" :ravel message=FALSE, warning=FALSE, fig.cap='Plotting the time spent total per task'
 Palette <- c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2",
              "#D55E00")
 org_clock_df(orgfile) %>%
@@ -189,9 +196,9 @@ org_clock_df(orgfile) %>%
 #+RESULTS:
 [[file:c.png]]
 
-Joining the results of =org_clock_df()= and =org_elements_df()= is achieved with the various dedicated functions provided by the =dplyr= library. The following example uses a =left_join()=, because we want omit the information on headings without any clocking information:
+Joining the results of =org_clock_df()= and =org_elements_df()= is achieved with the various dedicated functions provided by the =dplyr= library. The following example uses a =left_join()=, because we want to omit the information on headings without any clocking information:
 
-#+BEGIN_SRC r :results value
+#+BEGIN_SRC R :results value :ravel message=FALSE, warning=FALSE
 a_df <- org_clock_df(orgfile)
 b_df <- org_elements_df(orgfile)
 left_join(a_df, b_df) %>%
@@ -214,7 +221,7 @@ left_join(a_df, b_df) %>%
 
 The plot below is what I had in mind before writing =orgclockr=:
 
-#+BEGIN_SRC r :results graphics :file "d.png"
+#+BEGIN_SRC R :results graphics :file "~/R-programming/images/d.png" :ravel message=FALSE, warning=FALSE, fig.cap='Compare the time spent per task to the effort set'
 library(tidyr)
 
 left_join(a_df, b_df) %>%
@@ -244,7 +251,7 @@ left_join(a_df, b_df) %>%
 
 We got a striking example of mostly under estimates and one over estimate here. This obviously should be avoided. The preceeding plot clearly suggests horrible work efficiency rates for the tasks depicted with the sole exception of =TaskTwo= near the desired value of one:
 
-#+BEGIN_SRC r :results value :colnames yes
+#+BEGIN_SRC R :results value :colnames yes :ravel message=FALSE, warning=FALSE
 left_join(a_df, b_df) %>%
     select(Date, Headline, TimeSpent, Effort) %>%
     filter(!is.na(Effort)) %>%
@@ -264,11 +271,6 @@ left_join(a_df, b_df) %>%
 | TaskSix   |       232 |     60 |           0.26 |
 | TaskTen   |       334 |     25 |           0.07 |
 | TaskTwo   |        21 |     20 |           0.95 |
-
-** To be Done									:noexport:
-A graphical representation of the summed effort of outstanding work and the number of tasks to be completed taking deadlines into account is provided by a [[http://en.wikipedia.org/wiki/Burn_down_chart][burn down chart]].
-
-Another visualization I'd like to offer is a graphical representation of the time spent per task per day, allowing for a quick overview on main tasks per day.
 
 * Limitations
 This section may and hopefully will undergo changes in the future, so the list below is also a development roadmap:
