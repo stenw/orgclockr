@@ -105,7 +105,7 @@ filter(f, !grepl("TagThree", Tag))
 | TaskThree  | nil         | TagOne        |     2 | TODO  | nil      | nil    |
 
 ** Extracting Clocking Information
-While =org_elements_df()= extracts various elements from org headings, I decided to separate the clocking information from it. This is therefore returned from =org_clock_df()=, which will also result in a =dplyr::data_frame= object. As will be shown below, the local data frames returned from both function can easily be joined using =Headline= as the index column. The following code returns the number of days a task has been clocked into. Do not confuse this with the sum of =TimeSpent= in days:
+While =org_elements_df()= extracts various elements from org headings, I decided to separate the clocking information from it. This is therefore returned from =org_clock_df()=, which will also result in a =dplyr::data_frame= object. As will be shown below, the local data frames returned from both functions can easily be joined using =Headline= as the index column. The following code returns the number of days a task has been clocked into. Do not confuse this with the sum of =TimeSpent= in days:
 
 #+BEGIN_SRC R :results value
 org_clock_df(orgfile) %>%
