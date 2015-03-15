@@ -1,4 +1,4 @@
-#+PROPERTY: header-args:r :session :width 800 :exports both :colnames yes
+#+PROPERTY: header-args:R :session :width 800 :exports both :colnames yes
 #+OPTIONS: toc:nil
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="orgish.css/" />
 #+TITLE: orgclockr
@@ -24,16 +24,17 @@ opts_knit$set(self.contained = TRUE,
               upload.fun     = image_uri,
               header         = c(highlight = style))
 
-opts_chunk$set(comment       = "  ",
-               fig.path      = "",
-               fig.align     = "center",
-               fig.width     = 8,
-               fig.height    = 5,
-               out.width     = "70%",
-               dpi           = 300,
-               indent        = 10,
-               cache         = FALSE,
-               cache.path    = "../cache")
+opts_chunk$set(collapse   = TRUE,
+               comment    = "#>",
+               fig.path   = "",
+               fig.align  = "center",
+               fig.width  = 8,
+               fig.height = 5,
+               out.width  = "70%",
+               dpi        = 300,
+               indent     = 10,
+               cache      = FALSE,
+               cache.path = "../cache")
 
 knit_hooks$set(fig.cap = function(before, options, envir) {
     if(!before) {
@@ -169,7 +170,7 @@ org_clock_df(orgfile) %>%
 
 After doing simple calculations on the clocking data you may want to visualize your time spent as a time series. The =autoplot()= takes a =zoo= object, which is particularly aimed at irregular time series:
 
-#+BEGIN_SRC R :results graphics :file "~/R-programming/images/a.png" :ravel message=FALSE, warning=FALSE, fig.width=7, fig.height=5, fig.cap='The time spent per day for the last 3 months'
+#+BEGIN_SRC R :results graphics :file "~/octopress/source/images/orgclockr1.png" :ravel message=FALSE, warning=FALSE, fig.width=7, fig.height=5, fig.cap='The time spent per day for the last 3 months'
 library(zoo)
 
 org_clock_df(orgfile) %>%
@@ -189,11 +190,11 @@ org_clock_df(orgfile) %>%
 
 #+CAPTION: The time spent per day for the last 3 months
 #+RESULTS:
-[[file:a.png]]
+[[file:~/octopress/source/images/orgclockr1.png]]
 
 The plot below shows a very simple retrospective Gantt chart diagram, that takes the first and the last day clocked into a task as values:
 
-#+BEGIN_SRC R :results graphics :file "~/R-programming/images/b.png" :ravel message=FALSE, warning=FALSE, fig.cap='A very simple retrospective Gantt chart diagram'
+#+BEGIN_SRC R :results graphics :file "~/octopress/source/images/orgclockr2.png" :ravel message=FALSE, warning=FALSE, fig.cap='A very simple retrospective Gantt chart diagram'
 org_clock_df(orgfile) %>%
     select(Date, Headline) %>%
     filter(between(Date, Sys.Date() - 90, Sys.Date())) %>%
@@ -213,11 +214,11 @@ org_clock_df(orgfile) %>%
 
 #+CAPTION: A very simple retrospective Gantt chart diagram
 #+RESULTS:
-[[file:b.png]]
+[[file:~/octopress/source/images/orgclockr2.png]]
 
 This plot is pretty much self-explanatory:
 
-#+BEGIN_SRC R :results graphics :file "~/R-programming/images/c.png" :ravel message=FALSE, warning=FALSE, fig.cap='Plotting the time spent total per task'
+#+BEGIN_SRC R :results graphics :file "~/octopress/source/images/3.png" :ravel message=FALSE, warning=FALSE, fig.cap='Plotting the time spent total per task'
 Palette <- c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2",
              "#D55E00")
 org_clock_df(orgfile) %>%
@@ -234,7 +235,7 @@ org_clock_df(orgfile) %>%
 
 #+CAPTION: Plotting the time spent total per task
 #+RESULTS:
-[[file:c.png]]
+[[file:~/octopress/source/images/3.png]]
 
 Joining the results of =org_clock_df()= and =org_elements_df()= is achieved with the various dedicated functions provided by the =dplyr= library. The following example uses a =left_join()=, because we want to omit the information on headings without any clocking information:
 
@@ -261,7 +262,7 @@ left_join(a_df, b_df) %>%
 
 The plot below is what I had in mind before writing =orgclockr=:
 
-#+BEGIN_SRC R :results graphics :file "~/R-programming/images/d.png" :ravel message=FALSE, warning=FALSE, fig.cap='Compare the time spent per task to the effort set'
+#+BEGIN_SRC R :results graphics :file "~/octopress/source/images/4.png" :ravel message=FALSE, warning=FALSE, fig.cap='Compare the time spent per task to the effort set'
 library(tidyr)
 
 left_join(a_df, b_df) %>%
@@ -287,7 +288,7 @@ left_join(a_df, b_df) %>%
 
 #+CAPTION: Compare the time spent per task to the effort set
 #+RESULTS:
-[[file:d.png]]
+[[file:~/octopress/source/images/4.png]]
 
 We got a striking example of mostly under estimates and one over estimate here. This obviously should be avoided. The preceeding plot clearly suggests horrible work efficiency rates for the tasks depicted with the sole exception of =TaskTwo= near the desired value of one:
 
@@ -320,9 +321,9 @@ Another visualization I'd like to offer is a graphical representation of the tim
 * Limitations
 This section may and hopefully will undergo changes in the future, so the list below is also a development roadmap:
 
-- Currently the tag inheritance provided by the =inherit_tags= parameter in =org_elements_df()= and the =inherit= parameter in =extract_tags()= only works for level one tags.
-- For simplicity reasons, clock intervals are not split at midnight. Keep this in mind when clocking for long periods of time spanning from one day to the next. This may impair the meaningfulness of the =TimeSpent= in =org_clock_df()=.
-- Currently =orgclockr= doesn't parse the =ARCHIVE_ITAGS= and =ARCHIVE_CATEGORY= in archived org files.
+- [ ] Currently the tag inheritance provided by the =inherit_tags= parameter in =org_elements_df()= and the =inherit= parameter in =extract_tags()= only works for level one tags.
+- [ ] For simplicity reasons, clock intervals are not split at midnight. Keep this in mind when clocking for long periods of time spanning from one day to the next. This may impair the meaningfulness of the =TimeSpent= in =org_clock_df()=.
+- [ ] Currently =orgclockr= doesn't parse the =ARCHIVE_ITAGS= and =ARCHIVE_CATEGORY= in archived org files.
 * Further Reading
 - http://sachachua.com/blog/2007/12/clocking-time-with-emacs-org/
 - http://doc.norang.ca/org-mode.html#Clocking

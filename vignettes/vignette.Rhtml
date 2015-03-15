@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>orgclockr</title>
-<!-- 2015-03-14 Sa 23:28 -->
+<!-- 2015-03-15 So 22:15 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="Bernhard Pröll" />
@@ -157,16 +157,17 @@ opts_knit$set(self.contained = TRUE,
               upload.fun     = image_uri,
               header         = c(highlight = style))
 
-opts_chunk$set(comment       = "  ",
-               fig.path      = "",
-               fig.align     = "center",
-               fig.width     = 8,
-               fig.height    = 5,
-               out.width     = "70%",
-               dpi           = 300,
-               indent        = 10,
-               cache         = FALSE,
-               cache.path    = "../cache")
+opts_chunk$set(collapse   = TRUE,
+               comment    = "#>",
+               fig.path   = "",
+               fig.align  = "center",
+               fig.width  = 8,
+               fig.height = 5,
+               out.width  = "70%",
+               dpi        = 300,
+               indent     = 10,
+               cache      = FALSE,
+               cache.path = "../cache")
 
 knit_hooks$set(fig.cap = function(before, options, envir) {
     if(!before) {
@@ -427,11 +428,11 @@ This section may and hopefully will undergo changes in the future, so the list b
 </p>
 
 <ul class="org-ul">
-<li>Currently the tag inheritance provided by the <code>inherit_tags</code> parameter in <code>org_elements_df()</code> and the <code>inherit</code> parameter in <code>extract_tags()</code> only works for level one tags.
+<li><code>[&#xa0;]</code> Currently the tag inheritance provided by the <code>inherit_tags</code> parameter in <code>org_elements_df()</code> and the <code>inherit</code> parameter in <code>extract_tags()</code> only works for level one tags.
 </li>
-<li>For simplicity reasons, clock intervals are not split at midnight. Keep this in mind when clocking for long periods of time spanning from one day to the next. This may impair the meaningfulness of the <code>TimeSpent</code> in <code>org_clock_df()</code>.
+<li><code>[&#xa0;]</code> For simplicity reasons, clock intervals are not split at midnight. Keep this in mind when clocking for long periods of time spanning from one day to the next. This may impair the meaningfulness of the <code>TimeSpent</code> in <code>org_clock_df()</code>.
 </li>
-<li>Currently <code>orgclockr</code> doesn't parse the <code>ARCHIVE_ITAGS</code> and <code>ARCHIVE_CATEGORY</code> in archived org files.
+<li><code>[&#xa0;]</code> Currently <code>orgclockr</code> doesn't parse the <code>ARCHIVE_ITAGS</code> and <code>ARCHIVE_CATEGORY</code> in archived org files.
 </li>
 </ul>
 </div>
@@ -452,7 +453,7 @@ This section may and hopefully will undergo changes in the future, so the list b
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Bernhard Pröll</p>
-<p class="date">Created: 2015-03-14 Sa 23:28</p>
+<p class="date">Created: 2015-03-15 So 22:15</p>
 <p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.10)</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
