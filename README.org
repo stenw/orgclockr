@@ -6,8 +6,8 @@
 ** COMMENT Prepare Document
 #+BEGIN_SRC elisp :exports none :results silent
 (goto-char (point-min))
-(while (re-search-forward "\\[\\[file:~/octopress/source" nil t)
-  (replace-match "[[.")
+(while (re-search-forward "^#\\+RESULTS:\n\\[\\[file:~/octopress/source" nil t)
+  (replace-match "[[http://mutbuerger.github.io")
 )
 #+END_SRC
 
@@ -137,7 +137,7 @@ org_clock_df(orgfile) %>%
 
 After doing simple calculations on the clocking data you may want to visualize your time spent as a time series. The =autoplot()= takes a =zoo= object, which is particularly aimed at irregular time series:
 
-#+BEGIN_SRC R :results graphics :file "~/R-programming/orgclockr/images/orgclockr1.png" :ravel message=FALSE, warning=FALSE, fig.width=7, fig.height=5, fig.cap='The time spent per day for the last 3 months'
+#+BEGIN_SRC R :results graphics :file "~/octopress/source/images/orgclockr1.png" :ravel message=FALSE, warning=FALSE, fig.width=7, fig.height=5, fig.cap='The time spent per day for the last 3 months'
 library(zoo)
 
 org_clock_df(orgfile) %>%
@@ -156,11 +156,11 @@ org_clock_df(orgfile) %>%
 #+END_SRC
 
 #+CAPTION: The time spent per day for the last 3 months
-[[./images/orgclockr1.png]]
+[[http://mutbuerger.github.io/images/orgclockr1.png]]
 
 The plot below shows a very simple retrospective Gantt chart diagram, that takes the first and the last day clocked into a task as values:
 
-#+BEGIN_SRC R :results graphics :file "~/R-programming/orgclockr/images/orgclockr2.png" :ravel message=FALSE, warning=FALSE, fig.cap='A very simple retrospective Gantt chart diagram'
+#+BEGIN_SRC R :results graphics :file "~/octopress/source/images/orgclockr2.png" :ravel message=FALSE, warning=FALSE, fig.cap='A very simple retrospective Gantt chart diagram'
 org_clock_df(orgfile) %>%
     select(Date, Headline) %>%
     filter(between(Date, Sys.Date() - 90, Sys.Date())) %>%
@@ -179,12 +179,11 @@ org_clock_df(orgfile) %>%
 #+END_SRC
 
 #+CAPTION: A very simple retrospective Gantt chart diagram
-[[./images/orgclockr2.png]]
-
+[[http://mutbuerger.github.io/images/orgclockr2.png]]
 
 This plot is pretty much self-explanatory:
 
-#+BEGIN_SRC R :results graphics :file "~/R-programming/orgclockr/images/orgclockr3.png" :ravel message=FALSE, warning=FALSE, fig.cap='Plotting the time spent total per task'
+#+BEGIN_SRC R :results graphics :file "~/octopress/source/images/orgclockr3.png" :ravel message=FALSE, warning=FALSE, fig.cap='Plotting the time spent total per task'
 Palette <- c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2",
              "#D55E00")
 org_clock_df(orgfile) %>%
@@ -200,7 +199,7 @@ org_clock_df(orgfile) %>%
 #+END_SRC
 
 #+CAPTION: Plotting the time spent total per task
-[[./images/orgclockr3.png]]
+[[http://mutbuerger.github.io/images/orgclockr3.png]]
 
 Joining the results of =org_clock_df()= and =org_elements_df()= is achieved with the various dedicated functions provided by the =dplyr= library. The following example uses a =left_join()=, because we want to omit the information on headings without any clocking information:
 
@@ -227,7 +226,7 @@ left_join(a_df, b_df) %>%
 
 The plot below is what I had in mind before writing =orgclockr=:
 
-#+BEGIN_SRC R :results graphics :file "~/R-programming/orgclockr/images/orgclockr4.png" :ravel message=FALSE, warning=FALSE, fig.cap='Compare the time spent per task to the effort set'
+#+BEGIN_SRC R :results graphics :file "~/octopress/source/images/orgclockr4.png" :ravel message=FALSE, warning=FALSE, fig.cap='Compare the time spent per task to the effort set'
 library(tidyr)
 
 left_join(a_df, b_df) %>%
@@ -252,7 +251,7 @@ left_join(a_df, b_df) %>%
 #+END_SRC
 
 #+CAPTION: Compare the time spent per task to the effort set
-[[./images/orgclockr4.png]]
+[[http://mutbuerger.github.io/images/orgclockr4.png]]
 
 We got a striking example of mostly under estimates and one over estimate here. This obviously should be avoided. The preceeding plot clearly suggests horrible work efficiency rates for the tasks depicted with the sole exception of =TaskTwo= near the desired value of one:
 
