@@ -30,6 +30,6 @@ modified, the extraction is likely to fail.
 system.file("extdata", "sample.org", package = "orgclockr") \%>\%
 readLines() \%>\%
 extract_time_spent()
-##  [1]   0   0  21   0   0   2 232   0 122 152   2 334
+##  [1]  NA  NA  21  NA  NA  57 232  NA 122 152   2 334
 }
 
