@@ -129,20 +129,22 @@ The local data frame below sorts the tasks and days by the amount of time invest
 
 #+BEGIN_SRC R :results value
 org_clock_df(orgfile) %>%
-    filter(between(Date, Sys.Date() - 60, Sys.Date())) %>%
+  filter(between(Date, as.Date("2015-01-01"), Sys.Date())) %>%
     group_by(Date, Headline) %>%
     summarise(TimeSpent) %>%
     ungroup() %>%
     arrange(desc(TimeSpent))
 #+END_SRC
 
-#+CAPTION: Filtering the last 60 days and sort by time spent
+#+CAPTION: Filtering the tasks clocked since 2015 and sort by time spent
 #+RESULTS:
 |       Date | Headline  | TimeSpent |
 |------------+-----------+-----------|
 | 2015-01-19 | TaskTen   |       334 |
 | 2015-01-20 | TaskEight |       129 |
+| 2015-01-05 | TaskSeven |       122 |
 | 2015-02-28 | TaskFive  |        51 |
+| 2015-01-01 | TaskSix   |        34 |
 | 2015-02-05 | TaskEight |        23 |
 | 2015-03-01 | TaskFive  |         6 |
 | 2015-01-19 | TaskNine  |         2 |
@@ -175,7 +177,7 @@ library(zoo)
 
 org_clock_df(orgfile) %>%
     select(Date, TimeSpent) %>%
-    filter(between(Date, Sys.Date() - 90, Sys.Date())) %>%
+    filter(between(Date, as.Date("2015-01-01"), Sys.Date())) %>%
     as.data.frame() %>%
     read.zoo(index.column = "Date") %>%
     autoplot.zoo(stat = "identity",
@@ -188,7 +190,7 @@ org_clock_df(orgfile) %>%
                      xlab("Date")
 #+END_SRC
 
-#+CAPTION: The time spent per day for the last 3 months
+#+CAPTION: The time spent per day since 2015
 #+RESULTS:
 [[file:~/octopress/source/images/orgclockr1.png]]
 
@@ -197,7 +199,7 @@ The plot below shows a very simple retrospective Gantt chart diagram, that takes
 #+BEGIN_SRC R :results graphics :file "~/octopress/source/images/orgclockr2.png" :ravel message=FALSE, warning=FALSE, fig.cap='A very simple retrospective Gantt chart diagram'
 org_clock_df(orgfile) %>%
     select(Date, Headline) %>%
-    filter(between(Date, Sys.Date() - 90, Sys.Date())) %>%
+    filter(between(Date, as.Date("2014-11-01"), Sys.Date())) %>%
     as.data.frame() %>%
     read.zoo(index.column = "Date") %>%
     autoplot.zoo(stat = "identity",

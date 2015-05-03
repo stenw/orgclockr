@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>orgclockr</title>
-<!-- 2015-03-15 So 22:15 -->
+<!-- 2015-05-03 So 07:26 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="Bernhard Pröll" />
@@ -263,7 +263,7 @@ end.rcode-->
 <h3 id="sec-2-3"><span class="section-number-3">2.3</span> Extracting Clocking Information</h3>
 <div class="outline-text-3" id="text-2-3">
 <p>
-While <code>org_elements_df()</code> extracts various elements from org headings, I decided to separate the clocking information from it. This is therefore returned from <code>org_clock_df()</code>, which will also result in a <code>dplyr::data_frame</code> object. As will be shown below, the local data frames returned from both function can easily be joined using <code>Headline</code> as the index column. The following code returns the number of days a task has been clocked into. Do not confuse this with the sum of <code>TimeSpent</code> in days:
+While <code>org_elements_df()</code> extracts various elements from org headings, I decided to separate the clocking information from it. This is therefore returned from <code>org_clock_df()</code>, which will also result in a <code>dplyr::data_frame</code> object. As will be shown below, the local data frames returned from both functions can easily be joined using <code>Headline</code> as the index column. The following code returns the number of days a task has been clocked into. Do not confuse this with the sum of <code>TimeSpent</code> in days:
 </p>
 
 <!--begin.rcode
@@ -278,7 +278,7 @@ The local data frame below sorts the tasks and days by the amount of time invest
 
 <!--begin.rcode
 org_clock_df(orgfile) %>%
-    filter(between(Date, Sys.Date() - 60, Sys.Date())) %>%
+  filter(between(Date, as.Date("2015-01-01"), Sys.Date())) %>%
     group_by(Date, Headline) %>%
     summarise(TimeSpent) %>%
     ungroup() %>%
@@ -305,7 +305,7 @@ library(zoo)
 
 org_clock_df(orgfile) %>%
     select(Date, TimeSpent) %>%
-    filter(between(Date, Sys.Date() - 90, Sys.Date())) %>%
+    filter(between(Date, as.Date("2015-01-01"), Sys.Date())) %>%
     as.data.frame() %>%
     read.zoo(index.column = "Date") %>%
     autoplot.zoo(stat = "identity",
@@ -325,7 +325,7 @@ The plot below shows a very simple retrospective Gantt chart diagram, that takes
 <!--begin.rcode message=FALSE, warning=FALSE, fig.cap='A very simple retrospective Gantt chart diagram'
 org_clock_df(orgfile) %>%
     select(Date, Headline) %>%
-    filter(between(Date, Sys.Date() - 90, Sys.Date())) %>%
+    filter(between(Date, as.Date("2014-11-01"), Sys.Date())) %>%
     as.data.frame() %>%
     read.zoo(index.column = "Date") %>%
     autoplot.zoo(stat = "identity",
@@ -428,11 +428,11 @@ This section may and hopefully will undergo changes in the future, so the list b
 </p>
 
 <ul class="org-ul">
-<li><code>[&#xa0;]</code> Currently the tag inheritance provided by the <code>inherit_tags</code> parameter in <code>org_elements_df()</code> and the <code>inherit</code> parameter in <code>extract_tags()</code> only works for level one tags.
+<li><span class="checkbox">&#x2610;</span> Currently the tag inheritance provided by the <code>inherit_tags</code> parameter in <code>org_elements_df()</code> and the <code>inherit</code> parameter in <code>extract_tags()</code> only works for level one tags.
 </li>
-<li><code>[&#xa0;]</code> For simplicity reasons, clock intervals are not split at midnight. Keep this in mind when clocking for long periods of time spanning from one day to the next. This may impair the meaningfulness of the <code>TimeSpent</code> in <code>org_clock_df()</code>.
+<li><span class="checkbox">&#x2610;</span> For simplicity reasons, clock intervals are not split at midnight. Keep this in mind when clocking for long periods of time spanning from one day to the next. This may impair the meaningfulness of the <code>TimeSpent</code> in <code>org_clock_df()</code>.
 </li>
-<li><code>[&#xa0;]</code> Currently <code>orgclockr</code> doesn't parse the <code>ARCHIVE_ITAGS</code> and <code>ARCHIVE_CATEGORY</code> in archived org files.
+<li><span class="checkbox">&#x2610;</span> Currently <code>orgclockr</code> doesn't parse the <code>ARCHIVE_ITAGS</code> and <code>ARCHIVE_CATEGORY</code> in archived org files.
 </li>
 </ul>
 </div>
@@ -450,12 +450,6 @@ This section may and hopefully will undergo changes in the future, so the list b
 </ul>
 </div>
 </div>
-</div>
-<div id="postamble" class="status">
-<p class="author">Author: Bernhard Pröll</p>
-<p class="date">Created: 2015-03-15 So 22:15</p>
-<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.10)</p>
-<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
 </html>
