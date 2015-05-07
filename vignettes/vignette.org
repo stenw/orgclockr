@@ -91,7 +91,7 @@ system.file("extdata", "sample.org", package = "orgclockr") %>%
 library(orgclockr)
 
 f <- org_elements_df(orgfile)
-filter(f, !grepl("TagThree", Tag))
+filter(f, !grepl("TagThree", Tag), !is.na(Tag))
 #+END_SRC
 
 #+ATTR_HTML: :border 2 :rules all :frame border :align center

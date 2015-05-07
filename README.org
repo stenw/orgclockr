@@ -65,7 +65,7 @@ system.file("extdata", "sample.org", package = "orgclockr") %>%
 library(orgclockr)
 
 f <- org_elements_df(orgfile)
-filter(f, !grepl("TagThree", Tag))
+filter(f, !grepl("TagThree", Tag), !is.na(Tag))
 #+END_SRC
 
 #+ATTR_HTML: :border 2 :rules all :frame border :align center
@@ -75,8 +75,6 @@ filter(f, !grepl("TagThree", Tag))
 |------------+-------------+---------------+-------+-------+----------+--------|
 | HeadingOne | CategoryOne | TagOne        |     1 | nil   | nil      | nil    |
 | TaskOne    | nil         | TagOne TagTwo |     2 | TODO  | nil      | nil    |
-| TaskTwo    | nil         | TagOne        |     2 | TODO  | nil      | 20     |
-| TaskThree  | nil         | TagOne        |     2 | TODO  | nil      | nil    |
 
 *** Extracting Clocking Information
 While =org_elements_df()= extracts various elements from org headings, I decided to separate the clocking information from it. This is therefore returned from =org_clock_df()=, which will also result in a =dplyr::data_frame= object. As will be shown below, the local data frames returned from both functions can easily be joined using =Headline= as the index column. The following code returns the number of days a task has been clocked into. Do not confuse this with the sum of =TimeSpent= in days:
@@ -116,7 +114,9 @@ org_clock_df(orgfile) %>%
 |------------+-----------+-----------|
 | 2015-01-19 | TaskTen   |       334 |
 | 2015-01-20 | TaskEight |       129 |
+| 2015-01-05 | TaskSeven |       122 |
 | 2015-02-28 | TaskFive  |        51 |
+| 2015-01-01 | TaskSix   |        34 |
 | 2015-02-05 | TaskEight |        23 |
 | 2015-03-01 | TaskFive  |         6 |
 | 2015-01-19 | TaskNine  |         2 |
@@ -162,9 +162,6 @@ org_clock_df(orgfile) %>%
                      xlab("Date")
 #+END_SRC
 
-#+RESULTS:
-[[file:~/octopress/source/images/orgclockr1.png]]
-
 #+CAPTION: The time spent per day for the last 3 months
 [[http://mutbuerger.github.io/images/orgclockr1.png]]
 
@@ -188,9 +185,6 @@ org_clock_df(orgfile) %>%
                      ylab("Task") + xlab("Date")
 #+END_SRC
 
-#+RESULTS:
-[[file:~/octopress/source/images/orgclockr2.png]]
-
 #+CAPTION: A very simple retrospective Gantt chart diagram
 [[http://mutbuerger.github.io/images/orgclockr2.png]]
 
@@ -210,9 +204,6 @@ org_clock_df(orgfile) %>%
                    guides(fill = FALSE) +
                    labs(x = "Task", y = "Time Spent (min)")
 #+END_SRC
-
-#+RESULTS:
-[[file:~/octopress/source/images/orgclockr3.png]]
 
 #+CAPTION: Plotting the time spent total per task
 [[http://mutbuerger.github.io/images/orgclockr3.png]]

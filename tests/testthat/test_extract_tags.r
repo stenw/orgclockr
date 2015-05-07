@@ -1,7 +1,7 @@
 context('Check whether the tag inheritance works.')
 
 test_that('Tags are inherited.', {
-    expect_equal(extract_tags(orgfile)[3], "TagOne")
+    expect_equal(extract_tags(orgfile[5]), "TagTwo")
     expect_true("* TODO Testheader        " %>%
                     extract_tags() %>%
                     is.na())

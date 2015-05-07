@@ -42,5 +42,5 @@ extract_todostates <-
         x %>%
             extract_raw_headlines() %>%
             na.omit() %>%
-            stringr::str_extract(stringr::perl(pat))
+            stringr::str_extract(stringr::regex(pat))
     }

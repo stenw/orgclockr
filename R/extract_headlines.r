@@ -23,7 +23,7 @@ extract_headlines <-
                 stringr::str_replace_all("(:[[:alnum:]]{1,}){1,}:$", "") %>%
                 ## remove keywords
                 stringr::str_replace_all(
-                    stringr::perl(
+                    stringr::regex(
                         "^\\b[[:upper:]]{2,}((\\b)|(_[[:upper:]]+\\b))(?!(\\s{2,}|\\t|$))"),
                     "") %>%
                         stringr::str_trim()

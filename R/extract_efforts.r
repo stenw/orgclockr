@@ -27,7 +27,7 @@ extract_efforts <-
                 split_file[[i]] %>%
                     unlist() %>%
                     extract_efforts_total(pattern =
-                                              stringr::perl(pat)) %>%
+                                              stringr::regex(pat)) %>%
                     paste0(collapse = " ")
             })
         efforts[which(efforts == "")] <- NA

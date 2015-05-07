@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>orgclockr</title>
-<!-- 2015-05-03 So 07:26 -->
+<!-- 2015-05-07 Do 11:51 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="Bernhard Pröll" />
@@ -255,7 +255,7 @@ end.rcode-->
 library(orgclockr)
 
 f <- org_elements_df(orgfile)
-filter(f, !grepl("TagThree", Tag))
+filter(f, !grepl("TagThree", Tag), !is.na(Tag))
 end.rcode-->
 </div>
 </div>

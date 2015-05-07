@@ -48,11 +48,11 @@ extract_tags <-
                        sapply(function(x) unique(x) %>%
                                   unlist() %>%
                                   stringr::str_c(collapse = " ") %>%
-                                  stringr::str_trim() %>%
-                                  stringr::str_replace("^$", NA))
-                   ) %>%
+                                  stringr::str_trim()##  %>%
+                                  ## stringr::str_replace("^$", NA))
+                   )) %>%
                        unlist() %>%
-                       as.character() %>%
+                       unname() %>%
                        return()
         } else {
             return(tags)
